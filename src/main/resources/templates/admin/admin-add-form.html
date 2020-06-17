@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>ADD ADMIN</title>
+</head>
+
+    <body>
+        <p><strong>ADD ADMIN:</strong></p>
+        <br>
+
+        <form method="POST" th:action="@{/admins}" th:object="${admin}">
+
+            <label for="email">EMAIL:</label><br>
+            <input id="email" name="email" placeholder="EMAIL" th:field="*{email}" type="email">
+            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+            <br>
+            <br>
+
+            <label for="password">PASWORD:</label><br>
+            <input id="password" name="password" placeholder="PASSWORD" th:field="*{password}" type="password">
+            <span th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span>
+            <br>
+            <br>
+
+            <label for="firstName">FIRST NAME:</label><br>
+            <input id="firstName" name="firstName" placeholder="FIRST NAME" th:field="*{firstName}" type="text">
+            <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
+            <br>
+            <br>
+
+            <label for="lastName">LAST NAME:</label><br>
+            <input id="lastName" name="lastName" placeholder="LAST NAME" th:field="*{lastName}" type="text">
+            <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
+            <br>
+            <br>
+
+            <label for="phoneNoRo">ROMANIAN PHONE NUMBER:</label><br>
+            <input id="phoneNoRo" name="phoneNoRo" placeholder="ROMANIAN PHONE NUMBER" th:field="*{phoneNoRo}" type="text">
+            <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
+            <br>
+            <br>
+            <br>
+
+            <input type="submit" value="ADD ADMIN">
+
+        </form>
+    </body>
+</html>

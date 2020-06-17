@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>WELCOME (C.R.U.D. OPERATION TEST RESULTS)</title>
+    </head>
+
+    <body>
+        <p><strong>THIS A PLACEHOLDER PAGE, CONTAINING C.R.U.D. OPERATION TEST RESULTS</strong></p>
+        <br>
+        <br>
+
+        <a href="/entities/admin-add-form">ADD ADMIN</a><br><br>
+        <a href="/admins/admin-get-form">GET ADMIN</a><br><br>
+        <!--<a href="/entities/update-verification-form">UPDATE ENTITY</a><br><br>-->
+        <!--<a href="/entities/delete-verification-form">DELETE ENTITY</a>-->
+        <br>
+
+        <p>LAST SUCCESSFULLY CREATED/REQUESTED/UPDATED/DELETED ADMIN:</p><br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>EMAIL</th>
+                    <th>PHONE NUMBER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${adminDTO.id}"></td>
+                    <td th:text="${adminDTO.firstName}"></td>
+                    <td th:text="${adminDTO.lastName}"></td>
+                    <td th:text="${adminDTO.email}"></td>
+                    <td th:text="${adminDTO.phoneNoRo}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>

@@ -1,0 +1,11 @@
+# MVC CONFIGURATION:
+
+server:
+  port: 8080
+  use-forward-headers: true
+  servlet:
+    context-path: /
+    session:
+      timeout: 1d
+
+# NO PERSISTENCE NECESSARY. ADMINS ARE MANAGED THROUGH NHS BACKEND REST API.
