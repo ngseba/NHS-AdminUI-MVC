@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ro.iteahome.nhs.adminui.model.form.AdminCredentialsForm;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
+import ro.iteahome.nhs.adminui.model.form.AdminCredentialsForm;
 import ro.iteahome.nhs.adminui.service.AdminService;
 
 import javax.validation.Valid;
@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-// LINK "GET" REQUESTS: --------------------------------------------------------------------------------------------
+// LINK "GET" REQUESTS: ------------------------------------------------------------------------------------------------
 
     @GetMapping("/add-form")
     public String showAddForm(Admin admin) {
@@ -45,6 +45,8 @@ public class AdminController {
     }
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
+
+    // TODO: Incorporate exception handling.
 
     @PostMapping
     public ModelAndView add(@Valid Admin admin) {
