@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
     <head>
         <title>GET ADMIN</title>
     </head>
 
     <body>
-    <p><strong>GET ADMIN:</strong></p>
-    <br>
+        <p><strong>GET ADMIN:</strong></p>
+        <br>
 
         <form method="GET" th:action="@{/admins/by-id}" th:object="${adminDTO}">
             <label for="id">GET BY ID:</label><br>

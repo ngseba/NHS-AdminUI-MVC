@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <title>ADD ADMIN</title>
-</head>
+    <head>
+        <title>ADD ADMIN</title>
+    </head>
 
     <body>
         <p><strong>ADD ADMIN:</strong></p>
@@ -17,7 +16,7 @@
             <br>
             <br>
 
-            <label for="password">PASWORD:</label><br>
+            <label for="password">PASSWORD:</label><br>
             <input id="password" name="password" placeholder="PASSWORD" th:field="*{password}" type="password">
             <span th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span>
             <br>
@@ -43,7 +42,6 @@
             <br>
 
             <input type="submit" value="ADD ADMIN">
-
         </form>
     </body>
 </html>
