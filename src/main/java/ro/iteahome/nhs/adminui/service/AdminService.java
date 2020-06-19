@@ -22,7 +22,7 @@ public class AdminService {
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     //    private final String ADMINS_URL = "https://nhsbackendstage.myserverapps.com/admins";
-    private final String ADMINS_URL = "http://localhost:8080/admins";
+    private final String ADMINS_URL = "http://localhost:8081/admins";
 
     public AdminDTO add(Admin admin) {
         return restTemplate.postForObject(ADMINS_URL, admin, AdminDTO.class);

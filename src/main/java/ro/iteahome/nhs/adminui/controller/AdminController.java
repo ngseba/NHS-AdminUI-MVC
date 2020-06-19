@@ -26,22 +26,30 @@ public class AdminController {
 
     @GetMapping("/add-form")
     public String showAddForm(Admin admin) {
-        return "admin/add-form";
+        return "admin/admin-add-form";
     }
 
     @GetMapping("/get-form")
     public String showGetForm(AdminDTO adminDTO) {
-        return "admin/get-form";
+        return "admin/admin-get-form";
     }
 
-    @GetMapping("/update-verification-form")
+    @GetMapping("/update-verification")
     public String showUpdateVerificationForm(AdminCredentialsForm adminCredentialsForm) {
-        return "admin/update-verification-form";
+        return "admin/admin-update-verification";
+    }
+
+    @GetMapping("/update-form")
+    public ModelAndView showUpdateForm(@Valid AdminCredentialsForm adminCredentialsForm) {
+        ModelAndView adminUpdateMV = new ModelAndView("admin/admin-update-form");
+        Admin admin = adminService.getByCredentials(adminCredentialsForm.getEmail(), adminCredentialsForm.getPassword());
+        adminUpdateMV.addObject(admin);
+        return adminUpdateMV;
     }
 
     @GetMapping("/delete-form")
     public String showDeleteVerificationForm(AdminCredentialsForm adminCredentialsForm) {
-        return "admin/delete-form";
+        return "admin/admin-delete-form";
     }
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
@@ -50,7 +58,7 @@ public class AdminController {
 
     @PostMapping
     public ModelAndView add(@Valid Admin admin) {
-        ModelAndView addAdminMV = new ModelAndView("admin/crud-result");
+        ModelAndView addAdminMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO adminDTO = adminService.add(admin);
         addAdminMV.addObject(adminDTO);
         return addAdminMV;
@@ -58,7 +66,7 @@ public class AdminController {
 
     @GetMapping("/by-id")
     public ModelAndView getById(AdminDTO adminDTO) {
-        ModelAndView getAdminMV = new ModelAndView("admin/crud-result");
+        ModelAndView getAdminMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO databaseAdminDTO = adminService.getById(adminDTO.getId());
         getAdminMV.addObject(databaseAdminDTO);
         return getAdminMV;
@@ -66,23 +74,15 @@ public class AdminController {
 
     @GetMapping("/by-email")
     public ModelAndView getByEmail(AdminDTO adminDTO) {
-        ModelAndView getAdminMV = new ModelAndView("admin/crud-result");
+        ModelAndView getAdminMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO databaseAdminDTO = adminService.getByEmail(adminDTO.getEmail());
         getAdminMV.addObject(databaseAdminDTO);
         return getAdminMV;
     }
 
-    @GetMapping("/update-form")
-    public ModelAndView showUpdateForm(@Valid AdminCredentialsForm adminCredentialsForm) {
-        ModelAndView adminUpdateMV = new ModelAndView("admin/update-form");
-        Admin admin = adminService.getByCredentials(adminCredentialsForm.getEmail(), adminCredentialsForm.getPassword());
-        adminUpdateMV.addObject(admin);
-        return adminUpdateMV;
-    }
-
     @PostMapping("/updated-admin")
     public ModelAndView update(@Valid Admin admin) {
-        ModelAndView adminUpdateResultMV = new ModelAndView("admin/crud-result");
+        ModelAndView adminUpdateResultMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO adminDTO = adminService.update(admin);
         adminUpdateResultMV.addObject(adminDTO);
         return adminUpdateResultMV;
@@ -90,7 +90,7 @@ public class AdminController {
 
     @PostMapping("/deleted-admin")
     public ModelAndView delete(@Valid AdminCredentialsForm adminCredentialsForm) {
-        ModelAndView adminDeleteMV = new ModelAndView("admin/crud-result");
+        ModelAndView adminDeleteMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO adminDTO = adminService.deleteByCredentials(adminCredentialsForm.getEmail(), adminCredentialsForm.getPassword());
         adminDeleteMV.addObject(adminDTO);
         return adminDeleteMV;
