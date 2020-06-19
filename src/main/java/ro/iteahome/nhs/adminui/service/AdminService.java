@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
-import ro.iteahome.nhs.adminui.model.form.AdminCredentialsForm;
 
 @Service
 public class AdminService {
@@ -21,8 +20,7 @@ public class AdminService {
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
-    //    private final String ADMINS_URL = "https://nhsbackendstage.myserverapps.com/admins";
-    private final String ADMINS_URL = "http://localhost:8081/admins";
+    private final String ADMINS_URL = "https://nhsbackendstage.myserverapps.com/admins";
 
     public AdminDTO add(Admin admin) {
         return restTemplate.postForObject(ADMINS_URL, admin, AdminDTO.class);
