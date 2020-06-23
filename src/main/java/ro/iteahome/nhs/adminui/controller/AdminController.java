@@ -1,17 +1,25 @@
 package ro.iteahome.nhs.adminui.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
-import ro.iteahome.nhs.adminui.model.form.AdminCredentialsForm;
+import ro.iteahome.nhs.adminui.model.dto.AdminCredentialsForm;
 import ro.iteahome.nhs.adminui.service.AdminService;
 
 import javax.validation.Valid;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admins")
@@ -94,5 +102,23 @@ public class AdminController {
         AdminDTO adminDTO = adminService.deleteByCredentials(adminCredentialsForm.getEmail(), adminCredentialsForm.getPassword());
         adminDeleteMV.addObject(adminDTO);
         return adminDeleteMV;
+    }
+
+// OTHER METHODS: ------------------------------------------------------------------------------------------------------
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        errors.put("errorCode", "ADM-00");
+        errors.put("errorMessage", "ADMIN FIELDS HAVE VALIDATION ERRORS.");
+        errors.putAll(ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        FieldError::getDefaultMessage)));
+        return new ResponseEntity<>(
+                errors,
+                HttpStatus.BAD_REQUEST);
     }
 }

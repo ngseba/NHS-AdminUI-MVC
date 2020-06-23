@@ -2,13 +2,16 @@ package ro.iteahome.nhs.adminui.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
 
 @Service
-public class AdminService {
+public class AdminService implements UserDetailsService {
 
 // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
@@ -71,5 +74,22 @@ public class AdminService {
                         .concat("&password=")
                         .concat(password));
         return adminDTO;
+    }
+
+// OVERRIDDEN "UserDetailsService" METHODS: ----------------------------------------------------------------------------
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserDetails adminDetails = restTemplate
+                .getForObject(
+                        ADMINS_URL
+                                .concat("/by-email/")
+                                .concat(email),
+                        UserDetails.class); // TODO: This might not work as intended: Admins might need to implement "UserDetailsService" in the REST application.
+        if (adminDetails != null) {
+            return adminDetails;
+        } else {
+            throw new UsernameNotFoundException(email);
+        }
     }
 }

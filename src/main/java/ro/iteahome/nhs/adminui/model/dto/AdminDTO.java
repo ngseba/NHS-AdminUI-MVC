@@ -1,6 +1,12 @@
 package ro.iteahome.nhs.adminui.model.dto;
 
+import ro.iteahome.nhs.adminui.model.entity.Role;
+
+import java.util.Set;
+
 public class AdminDTO {
+
+// FIELDS: -------------------------------------------------------------------------------------------------------------
 
     private int id;
 
@@ -14,7 +20,11 @@ public class AdminDTO {
 
     private String phoneNoRo;
 
-//    private String status; // TODO: Figure out how and why to incorporate this.
+    private int status;
+
+    private Set<Role> roles;
+
+// METHODS: ------------------------------------------------------------------------------------------------------------
 
     public AdminDTO() {
     }
@@ -57,5 +67,21 @@ public class AdminDTO {
 
     public void setPhoneNoRo(String phoneNoRo) {
         this.phoneNoRo = phoneNoRo;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

@@ -1,10 +1,22 @@
 package ro.iteahome.nhs.adminui.model.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class Admin {
+public class Admin implements UserDetails {
+
+// FIELDS: -------------------------------------------------------------------------------------------------------------
+
+    private static final String ROLE_PREFIX = "ROLE_";
 
     private int id;
 
@@ -26,7 +38,13 @@ public class Admin {
     @Pattern(regexp = "^0040\\d{9}$", message = "INVALID PHONE NUMBER")
     private String phoneNoRo;
 
-//    private String status; // TODO: Figure out how and why to incorporate this.
+    @NotNull(message = "STATUS CANNOT BE NULL.")
+    private int status;
+
+    @NotEmpty
+    private Set<Role> roles;
+
+// METHODS: ------------------------------------------------------------------------------------------------------------
 
     public Admin() {
     }
@@ -47,9 +65,7 @@ public class Admin {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    // "getPassword()" IS PART OF THE "UserDetails" OVERRIDDEN METHODS.
 
     public void setPassword(String password) {
         this.password = password;
@@ -77,5 +93,59 @@ public class Admin {
 
     public void setPhoneNoRo(String phoneNoRo) {
         this.phoneNoRo = phoneNoRo;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+// OVERRIDDEN METHODS FROM "UserDetails" INTERFACE: --------------------------------------------------------------------
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.getName()))
+                .collect(Collectors.toList());
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return status == 1;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return status != 3;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return status != 3;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return status != 4;
     }
 }
