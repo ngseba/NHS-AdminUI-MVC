@@ -1,5 +1,6 @@
 package ro.iteahome.nhs.adminui.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import ro.iteahome.nhs.adminui.model.dto.AdminCreationForm;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
-import ro.iteahome.nhs.adminui.model.dto.AdminCredentialsForm;
 import ro.iteahome.nhs.adminui.service.AdminService;
 
 import javax.validation.Valid;
@@ -30,34 +31,29 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
 // LINK "GET" REQUESTS: ------------------------------------------------------------------------------------------------
 
     @GetMapping("/add-form")
     public String showAddForm(Admin admin) {
-        return "admin/admin-add-form";
+        return "admin/add-form";
     }
 
     @GetMapping("/get-form")
     public String showGetForm(AdminDTO adminDTO) {
-        return "admin/admin-get-form";
+        return "admin/get-form";
     }
 
-    @GetMapping("/update-verification")
-    public String showUpdateVerificationForm(AdminCredentialsForm adminCredentialsForm) {
-        return "admin/admin-update-verification";
-    }
-
-    @GetMapping("/update-form")
-    public ModelAndView showUpdateForm(@Valid AdminCredentialsForm adminCredentialsForm) {
-        ModelAndView adminUpdateMV = new ModelAndView("admin/admin-update-form");
-        Admin admin = adminService.getByCredentials(adminCredentialsForm.getEmail(), adminCredentialsForm.getPassword());
-        adminUpdateMV.addObject(admin);
-        return adminUpdateMV;
+    @GetMapping("/update-search-form")
+    public String showUpdateSearchForm(AdminDTO adminDTO) {
+        return "admin/update-search-form";
     }
 
     @GetMapping("/delete-form")
-    public String showDeleteVerificationForm(AdminCredentialsForm adminCredentialsForm) {
-        return "admin/admin-delete-form";
+    public String showDeleteForm(AdminDTO adminDTO) {
+        return "admin/delete-form";
     }
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
@@ -65,43 +61,73 @@ public class AdminController {
     // TODO: Incorporate exception handling.
 
     @PostMapping
-    public ModelAndView add(@Valid Admin admin) {
+    public ModelAndView add(@Valid AdminCreationForm admin) {
         ModelAndView addAdminMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO adminDTO = adminService.add(admin);
         addAdminMV.addObject(adminDTO);
         return addAdminMV;
     }
 
-    @GetMapping("/by-id")
+    @GetMapping("/by-id") // TODO: Leaving the field blank throws an error. Fix that.
     public ModelAndView getById(AdminDTO adminDTO) {
         ModelAndView getAdminMV = new ModelAndView("admin/temp-crud-result");
-        AdminDTO databaseAdminDTO = adminService.getById(adminDTO.getId());
+        AdminDTO databaseAdminDTO = adminService.findById(adminDTO.getId());
         getAdminMV.addObject(databaseAdminDTO);
         return getAdminMV;
     }
 
-    @GetMapping("/by-email")
+    @GetMapping("/by-email") // TODO: Leaving the field blank throws an error. Fix that.
     public ModelAndView getByEmail(AdminDTO adminDTO) {
         ModelAndView getAdminMV = new ModelAndView("admin/temp-crud-result");
-        AdminDTO databaseAdminDTO = adminService.getByEmail(adminDTO.getEmail());
+        AdminDTO databaseAdminDTO = adminService.findByEmail(adminDTO.getEmail());
         getAdminMV.addObject(databaseAdminDTO);
         return getAdminMV;
+    }
+
+    @PostMapping("/update-search-term")
+    public ModelAndView showPopulatedUpdateForm(AdminDTO adminDTO) {
+        ModelAndView adminUpdateMV = new ModelAndView("admin/update-form");
+        Admin admin;
+        if (adminDTO.getId() != 0) {
+            admin = adminService.findSensitiveById(adminDTO.getId());
+            adminUpdateMV.addObject(admin);
+            return adminUpdateMV;
+        } else if (adminDTO.getEmail() != null) {
+            admin = adminService.findSensitiveByEmail(adminDTO.getEmail());
+            adminUpdateMV.addObject(admin);
+            return adminUpdateMV;
+        } else {
+            adminUpdateMV.setViewName("/update-search-form");
+            return adminUpdateMV;
+        }
     }
 
     @PostMapping("/updated-admin")
-    public ModelAndView update(@Valid Admin admin) {
+    public ModelAndView update(@Valid AdminCreationForm admin) {
         ModelAndView adminUpdateResultMV = new ModelAndView("admin/temp-crud-result");
         AdminDTO adminDTO = adminService.update(admin);
         adminUpdateResultMV.addObject(adminDTO);
         return adminUpdateResultMV;
     }
 
-    @PostMapping("/deleted-admin")
-    public ModelAndView delete(@Valid AdminCredentialsForm adminCredentialsForm) {
+    @PostMapping("/delete-search-term")
+    public ModelAndView deleteByIdOrEmail(AdminDTO adminDTO) {
         ModelAndView adminDeleteMV = new ModelAndView("admin/temp-crud-result");
-        AdminDTO adminDTO = adminService.deleteByCredentials(adminCredentialsForm.getEmail(), adminCredentialsForm.getPassword());
-        adminDeleteMV.addObject(adminDTO);
-        return adminDeleteMV;
+        AdminDTO deletedAdminDTO;
+        if (adminDTO.getId() != 0) {
+            deletedAdminDTO = adminService.findById(adminDTO.getId());
+            adminService.deleteById(adminDTO.getId());
+            adminDeleteMV.addObject(deletedAdminDTO);
+            return adminDeleteMV;
+        } else if (adminDTO.getEmail() != null) {
+            deletedAdminDTO = adminService.findByEmail(adminDTO.getEmail());
+            adminService.deleteByEmail(adminDTO.getEmail());
+            adminDeleteMV.addObject(deletedAdminDTO);
+            return adminDeleteMV;
+        } else {
+            adminDeleteMV.setViewName("/delete-form");
+            return adminDeleteMV;
+        }
     }
 
 // OTHER METHODS: ------------------------------------------------------------------------------------------------------

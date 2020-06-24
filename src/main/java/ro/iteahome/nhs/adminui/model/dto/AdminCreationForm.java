@@ -1,21 +1,15 @@
-package ro.iteahome.nhs.adminui.model.entity;
+package ro.iteahome.nhs.adminui.model.dto;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import ro.iteahome.nhs.adminui.model.entity.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class Admin implements UserDetails {
+public class AdminCreationForm {
 
 // FIELDS: -------------------------------------------------------------------------------------------------------------
-
-    private static final String ROLE_PREFIX = "ROLE_";
 
     private int id;
 
@@ -43,7 +37,7 @@ public class Admin implements UserDetails {
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
 
-    public Admin() {
+    public AdminCreationForm() {
     }
 
     public int getId() {
@@ -62,7 +56,9 @@ public class Admin implements UserDetails {
         this.email = email;
     }
 
-    // "getPassword()" IS PART OF THE "UserDetails" OVERRIDDEN METHODS.
+    public String getPassword() {
+        return password;
+    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -106,43 +102,5 @@ public class Admin implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.getName()))
-                .collect(Collectors.toList());
-    }
-
-// OVERRIDDEN METHODS FROM "UserDetails" INTERFACE: --------------------------------------------------------------------
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return status == 1;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return status != 3;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return status != 3;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return status != 4;
     }
 }

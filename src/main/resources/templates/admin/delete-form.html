@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>DELETE ADMIN</title>
+    </head>
+
+    <body>
+        <p><strong>DELETE ADMIN:</strong></p>
+        <br>
+
+        <form method="POST" th:action="@{/admins/delete-search-term}" th:object="${adminDTO}">
+            <label for="id">ID:</label><br>
+            <input id="id" name="id" placeholder="DELETE BY ID" th:field="*{id}" type="id">
+            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
+            <input type="submit" value="DELETE">
+        </form>
+        <br>
+        <br>
+
+        <form method="POST" th:action="@{/admins/delete-search-term}" th:object="${adminDTO}">
+            <label for="email">EMAIL:</label><br>
+            <input id="email" name="email" placeholder="DELETE BY EMAIL" th:field="*{email}" type="email">
+            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+            <input type="submit" value="DELETE">
+        </form>
+    </body>
+</html>

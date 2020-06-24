@@ -14,7 +14,7 @@ import ro.iteahome.nhs.adminui.service.AdminService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
@@ -41,13 +41,14 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("...PUBLIC ENDPOINTS...").permitAll() // TODO: Add actual endpoints to this list.
                 .antMatchers("...ANONYMOUS ENDPOINTS...").anonymous() // TODO: Add actual endpoints to this list.
-                .antMatchers("...ADMIN-ROLE-ENDPOINTS...").hasRole("ADMIN") // TODO: Add actual endpoints to this list.
-                .anyRequest().authenticated() // FAIL-SAFE: ALL OTHER REQUEST MUST BE AUTHENTICATED
+                .antMatchers("...ADMIN-SPECIFIC-ENDPOINTS...").hasRole("ADMIN") // TODO: Add actual endpoints to this list.
+//                .anyRequest().authenticated() // FAIL-SAFE: ALL OTHER REQUEST MUST BE AUTHENTICATED
+                .anyRequest().permitAll()
                 .and()
 
                 .formLogin()
                 .loginPage("/login") // TODO: Develop a login page
-                // TODO: Configure access to login: only unauthenticated users.
+                // TODO: Configure access to login: only anonymous users.
                 .and()
 
                 .logout()
