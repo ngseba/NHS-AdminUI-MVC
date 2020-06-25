@@ -10,8 +10,7 @@
 
         <form method="POST" th:action="@{/admins/updated-admin}" th:object="${admin}">
 
-            <input id="id" name="id" placeholder="id" th:field="*{id}" type="hidden">
-            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
+            <input id="id" name="id" th:field="*{id}" type="hidden">
 
             <label for="email">EMAIL:</label><br>
             <input id="email" name="email" placeholder="EMAIL" th:field="*{email}" type="email">
@@ -44,6 +43,10 @@
             <br>
             <br>
             <br>
+
+            <input id="status" name="status" th:field="*{status}" type="hidden">
+
+            <input id="role" name="role" th:field="*{role}" type="hidden">
 
             <input type="submit" value="UPDATE ADMIN">
         </form>

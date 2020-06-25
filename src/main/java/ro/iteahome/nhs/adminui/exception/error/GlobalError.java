@@ -1,12 +1,12 @@
 package ro.iteahome.nhs.adminui.exception.error;
 
-public class UserError {
+public class GlobalError {
 
     private String errorCode;
 
     private String errorMessage;
 
-    public UserError(String errorCode, String errorMessage) {
+    public GlobalError(String errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }

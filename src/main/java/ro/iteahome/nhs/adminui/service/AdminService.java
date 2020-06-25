@@ -10,8 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ro.iteahome.nhs.adminui.exception.business.AdminNotFoundException;
-import ro.iteahome.nhs.adminui.model.dto.AdminCreationForm;
+import ro.iteahome.nhs.adminui.exception.business.GlobalAlreadyExistsException;
+import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
+import ro.iteahome.nhs.adminui.model.dto.AdminCreationDTO;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
 
@@ -41,50 +42,55 @@ public class AdminService implements UserDetailsService {
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
-    public AdminDTO add(AdminCreationForm admin) {
-        ResponseEntity<AdminDTO> adminResponseDTO =
+    public AdminDTO add(AdminCreationDTO adminCreationDTO) {
+        ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
                         ADMINS_URL,
                         HttpMethod.POST,
-                        new HttpEntity<>(admin, getAuthHeaders()),
+                        new HttpEntity<>(adminCreationDTO, getAuthHeaders()),
                         AdminDTO.class);
-        return adminResponseDTO.getBody();
+        AdminDTO adminDTO = responseAdminDTO.getBody();
+        if (adminDTO != null) {
+            return responseAdminDTO.getBody();
+        } else {
+            throw new GlobalAlreadyExistsException("ADMIN");
+        }
     }
 
     public AdminDTO findById(int id) {
-        ResponseEntity<AdminDTO> adminResponseDTO =
+        ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
                         ADMINS_URL + "/by-id/" + id,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         AdminDTO.class);
-        AdminDTO adminDTO = adminResponseDTO.getBody();
+        AdminDTO adminDTO = responseAdminDTO.getBody();
         if (adminDTO != null) {
             return adminDTO;
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
     public AdminDTO findByEmail(String email) {
-        ResponseEntity<AdminDTO> adminResponseDTO =
+        ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
                         ADMINS_URL + "/by-email/" + email,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         AdminDTO.class);
-        AdminDTO adminDTO = adminResponseDTO.getBody();
+        AdminDTO adminDTO = responseAdminDTO.getBody();
         if (adminDTO != null) {
             return adminDTO;
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
     public Admin findSensitiveById(int id) {
         ResponseEntity<Admin> adminResponse =
                 restTemplate.exchange(
-                        ADMINS_URL + "/for-update/by-id/" + id,
+                        ADMINS_URL + "/sensitive/by-id/" + id,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Admin.class);
@@ -92,14 +98,14 @@ public class AdminService implements UserDetailsService {
         if (admin != null) {
             return admin;
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
     public Admin findSensitiveByEmail(String email) {
         ResponseEntity<Admin> adminResponse =
                 restTemplate.exchange(
-                        ADMINS_URL + "/for-update/by-email/" + email,
+                        ADMINS_URL + "/sensitive/by-email/" + email,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Admin.class);
@@ -107,53 +113,50 @@ public class AdminService implements UserDetailsService {
         if (admin != null) {
             return admin;
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
-    public AdminDTO update(AdminCreationForm admin) {
+    public AdminDTO update(Admin admin) { // TODO: This works in Edge. Chrome, however, does not populate the "password" field... Find a solution.
         AdminDTO adminDTO = findById(admin.getId());
         if (adminDTO != null) {
-            admin.setStatus(adminDTO.getStatus());
-            admin.setRoles(adminDTO.getRoles());
-            restTemplate.exchange(
+            return restTemplate.exchange(
                     ADMINS_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(admin, getAuthHeaders()),
-                    AdminDTO.class);
-            return findById(admin.getId());
+                    AdminDTO.class).getBody();
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
     public AdminDTO deleteById(int id) {
         AdminDTO adminDTO = findById(id);
         if (adminDTO != null) {
-            ResponseEntity<AdminDTO> adminResponseDTO =
+            ResponseEntity<AdminDTO> responseAdminDTO =
                     restTemplate.exchange(
                             ADMINS_URL + "/by-id/" + id,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             AdminDTO.class);
-            return adminResponseDTO.getBody();
+            return responseAdminDTO.getBody();
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
     public AdminDTO deleteByEmail(String email) {
         AdminDTO adminDTO = findByEmail(email);
         if (adminDTO != null) {
-            ResponseEntity<AdminDTO> adminResponseDTO =
+            ResponseEntity<AdminDTO> responseAdminDTO =
                     restTemplate.exchange(
                             ADMINS_URL + "/by-email/" + email,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             AdminDTO.class);
-            return adminResponseDTO.getBody();
+            return responseAdminDTO.getBody();
         } else {
-            throw new AdminNotFoundException();
+            throw new GlobalNotFoundException("ADMIN");
         }
     }
 
@@ -161,15 +164,15 @@ public class AdminService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDetails adminDetails =
+        ResponseEntity<UserDetails> responseAdmin =
                 restTemplate.exchange(
-                        ADMINS_URL + "/by-email/" + email,
+                        ADMINS_URL + "/sensitive/by-email/" + email,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        UserDetails.class)
-                        .getBody();
-        if (adminDetails != null) {
-            return adminDetails;
+                        UserDetails.class);
+        UserDetails admin = responseAdmin.getBody();
+        if (admin != null) {
+            return admin;
         } else {
             throw new UsernameNotFoundException(email);
         }

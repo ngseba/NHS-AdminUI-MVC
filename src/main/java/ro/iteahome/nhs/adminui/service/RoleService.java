@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ro.iteahome.nhs.adminui.exception.business.RoleNotFoundException;
+import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.dto.RoleDTO;
 import ro.iteahome.nhs.adminui.model.entity.Role;
 
@@ -28,7 +28,7 @@ public class RoleService implements UserDetailsService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String ROLES_URL = "https://nhsbackendstage.myserverapps.com/roles";
+    private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ public class RoleService implements UserDetailsService {
         if (role != null) {
             return role;
         } else {
-            throw new RoleNotFoundException();
+            throw new GlobalNotFoundException("ROLE");
         }
     }
 
@@ -76,7 +76,7 @@ public class RoleService implements UserDetailsService {
         if (role != null) {
             return role;
         } else {
-            throw new RoleNotFoundException();
+            throw new GlobalNotFoundException("ROLE");
         }
     }
 
@@ -90,7 +90,7 @@ public class RoleService implements UserDetailsService {
                     Role.class);
             return findById(newRole.getId());
         } else {
-            throw new RoleNotFoundException();
+            throw new GlobalNotFoundException("ROLE");
         }
     }
 
@@ -105,7 +105,7 @@ public class RoleService implements UserDetailsService {
                             Role.class);
             return roleResponse.getBody();
         } else {
-            throw new RoleNotFoundException();
+            throw new GlobalNotFoundException("ROLE");
         }
     }
 
@@ -120,7 +120,7 @@ public class RoleService implements UserDetailsService {
                             Role.class);
             return roleResponse.getBody();
         } else {
-            throw new RoleNotFoundException();
+            throw new GlobalNotFoundException("ROLE");
         }
     }
 

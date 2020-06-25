@@ -7,17 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Admin implements UserDetails {
 
 // FIELDS: -------------------------------------------------------------------------------------------------------------
 
-    private static final String ROLE_PREFIX = "ROLE_";
-
-    private int id;
+    private int id; // NO @ID TAG. THIS APP HAS NO REPOSITORY.
 
     @NotNull(message = "EMAIL CANNOT BE EMPTY.")
     @Email(regexp = ".+@.+\\.\\w+", message = "INVALID EMAIL ADDRESS")
@@ -39,7 +36,7 @@ public class Admin implements UserDetails {
 
     private int status;
 
-    private Set<Role> roles;
+    private String role;
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
 
@@ -63,10 +60,6 @@ public class Admin implements UserDetails {
     }
 
     // "getPassword()" IS PART OF THE "UserDetails" OVERRIDDEN METHODS.
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -100,25 +93,28 @@ public class Admin implements UserDetails {
         this.status = status;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.getName()))
-                .collect(Collectors.toList());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getRole());
+        return Arrays.asList(authority);
+    }
+
+    public String getPassword() {
+        return password;
     }
 
 // OVERRIDDEN METHODS FROM "UserDetails" INTERFACE: --------------------------------------------------------------------
 
-    public String getPassword() {
-        return password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

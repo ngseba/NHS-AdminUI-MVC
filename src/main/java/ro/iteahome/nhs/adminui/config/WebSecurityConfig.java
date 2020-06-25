@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,21 +39,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("...PUBLIC ENDPOINTS...").permitAll() // TODO: Add actual endpoints to this list.
-                .antMatchers("...ANONYMOUS ENDPOINTS...").anonymous() // TODO: Add actual endpoints to this list.
-                .antMatchers("...ADMIN-SPECIFIC-ENDPOINTS...").hasRole("ADMIN") // TODO: Add actual endpoints to this list.
-//                .anyRequest().authenticated() // FAIL-SAFE: ALL OTHER REQUEST MUST BE AUTHENTICATED
-                .anyRequest().permitAll()
+                .antMatchers("...PUBLIC ENDPOINTS...").permitAll()
+                .antMatchers("...ANONYMOUS ENDPOINTS...").anonymous()
+                .antMatchers("...ADMIN-SPECIFIC-ENDPOINTS...").hasRole("ADMIN")
+                .anyRequest().permitAll() // TODO: Change this to "anyRequest().authenticated"
                 .and()
 
                 .formLogin()
-                .loginPage("/login") // TODO: Develop a login page
-                // TODO: Configure access to login: only anonymous users.
+                .loginPage("/login")
                 .and()
 
                 .logout()
                 .logoutUrl("/signout")
-                // TODO: Configure logout parameters: only authenticated users.
                 .and()
 
                 .csrf().disable() // TODO: Configure this, instead of avoiding it.

@@ -1,17 +1,14 @@
 package ro.iteahome.nhs.adminui.model.dto;
 
-import ro.iteahome.nhs.adminui.model.entity.Role;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
 
-public class AdminCreationForm {
+public class AdminCreationDTO {
 
 // FIELDS: -------------------------------------------------------------------------------------------------------------
 
-    private int id;
+    // NO ID. (REST-GENERATED)
 
     @NotNull(message = "EMAIL CANNOT BE EMPTY.")
     @Email(regexp = ".+@.+\\.\\w+", message = "INVALID EMAIL ADDRESS")
@@ -31,21 +28,13 @@ public class AdminCreationForm {
     @Pattern(regexp = "^0040\\d{9}$", message = "INVALID PHONE NUMBER")
     private String phoneNoRo;
 
-    private int status;
+    // NO STATUS. (REST-GENERATED)
 
-    private Set<Role> roles;
+    // NO ROLE. (REST-GENERATED)
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
 
-    public AdminCreationForm() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public AdminCreationDTO() {
     }
 
     public String getEmail() {
@@ -86,21 +75,5 @@ public class AdminCreationForm {
 
     public void setPhoneNoRo(String phoneNoRo) {
         this.phoneNoRo = phoneNoRo;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 }
