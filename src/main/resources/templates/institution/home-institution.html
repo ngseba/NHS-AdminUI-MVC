@@ -6,31 +6,33 @@
 
     <body>
 
-        <div th:include="admin-categories :: categories"></div>
+        <div th:include="home-initial :: categories"></div>
 
-        <p>YOUR LAST "ADMIN" REQUEST'S RESULT:</p>
+        <p>YOUR LAST "INSTITUTION" REQUEST'S RESULT:</p>
 
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>FIRST NAME</th>
-                    <th>LAST NAME</th>
-                    <th>EMAIL</th>
+                    <th>NAME</th>
+                    <th>CUI</th>
+                    <th>TYPE</th>
+                    <th>ADDRESS</th>
                     <th>PHONE NUMBER</th>
-                    <th>STATUS</th>
-                    <th>ROLES</th>
+                    <th>EMAIL</th>
+                    <th>WEBSITE</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td th:text="${adminDTO.id}"></td>
-                    <td th:text="${adminDTO.firstName}"></td>
-                    <td th:text="${adminDTO.lastName}"></td>
-                    <td th:text="${adminDTO.email}"></td>
-                    <td th:text="${adminDTO.phoneNoRo}"></td>
-                    <td th:text="${adminDTO.status}"></td>
-                    <td th:text="${adminDTO.role}"></td>
+                    <td th:text="${institution.id}"></td>
+                    <td th:text="${institution.name}"></td>
+                    <td th:text="${institution.cui}"></td>
+                    <td th:text="${institution.type}"></td>
+                    <td th:text="${institution.address}"></td>
+                    <td th:text="${institution.phoneNoRo}"></td>
+                    <td th:text="${institution.email}"></td>
+                    <td th:text="${institution.website}"></td>
                 </tr>
             </tbody>
         </table>

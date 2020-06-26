@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>UPDATE ADMIN</title>
+        <title>UPDATE INSTITUTION</title>
     </head>
 
     <body>
-        <p><strong>UPDATE ADMIN:</strong></p>
+        <p><strong>UPDATE INSTITUTION:</strong></p>
         <br>
 
-        <form method="POST" th:action="@{/admins/update-form-by-id}" th:object="${adminDTO}">
+        <form method="GET" th:action="@{/medical-institutions/update-form-by-id}" th:object="${institution}">
             <label for="id">ID:</label><br>
             <input id="id" name="id" placeholder="FIND BY ID" th:field="*{id}" type="id">
             <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
@@ -17,10 +17,10 @@
         <br>
         <br>
 
-        <form method="POST" th:action="@{/admins/update-form-by-email}" th:object="${adminDTO}">
-            <label for="email">EMAIL:</label><br>
-            <input id="email" name="email" placeholder="FIND BY EMAIL" th:field="*{email}" type="email">
-            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+        <form method="GET" th:action="@{/medical-institutions/update-form-by-cui}" th:object="${institution}">
+            <label for="cui">CUI:</label><br>
+            <input id="cui" name="cui" placeholder="FIND BY CUI" th:field="*{cui}" type="text">
+            <span th:errors="*{cui}" th:if="${#fields.hasErrors('cui')}"></span>
             <input type="submit" value="SEARCH">
         </form>
     </body>

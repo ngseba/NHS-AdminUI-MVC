@@ -8,8 +8,7 @@
         <p><strong>UPDATE ADMIN:</strong></p>
         <br>
 
-        <form method="POST" th:action="@{/admins/updated-admin}" th:object="${admin}">
-
+        <form method="POST" th:action="@{/medical-institutions/updated-institution}" th:object="${institution}">
             <input id="id" name="id" th:field="*{id}" type="hidden">
 
             <label for="email">EMAIL:</label><br>
@@ -18,21 +17,21 @@
             <br>
             <br>
 
-            <label for="password">PASSWORD:</label><br>
-            <input id="password" name="password" placeholder="PASSWORD" th:field="*{password}" type="password">
-            <span th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span>
+            <label for="address">Address:</label><br>
+            <input id="address" name="address" placeholder="ADDRESS" th:field="*{address}" type="text">
+            <span th:address="*{address}" th:if="${#fields.hasErrors('address')}"></span>
             <br>
             <br>
 
-            <label for="firstName">FIRST NAME:</label><br>
-            <input id="firstName" name="firstName" placeholder="FIRST NAME" th:field="*{firstName}" type="text">
-            <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
+            <label for="cui">CUI:</label><br>
+            <input id="cui" name="cui" placeholder="CUI" th:field="*{cui}" type="text">
+            <span th:cui="*{cui}" th:if="${#fields.hasErrors('cui')}"></span>
             <br>
             <br>
 
-            <label for="lastName">LAST NAME:</label><br>
-            <input id="lastName" name="lastName" placeholder="LAST NAME" th:field="*{lastName}" type="text">
-            <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
+            <label for="name">NAME:</label><br>
+            <input id="name" name="name" placeholder="NAME" th:field="*{name}" type="text">
+            <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
             <br>
             <br>
 
@@ -42,13 +41,20 @@
             <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
             <br>
             <br>
+
+            <label for="type">Type:</label><br>
+            <input id="type" name="type" placeholder="TYPE" th:field="*{type}" type="text">
+            <span th:errors="*{type}" th:if="${#fields.hasErrors('type')}"></span>
+            <br>
             <br>
 
-            <input id="status" name="status" th:field="*{status}" type="hidden">
+            <label for="website">Website:</label><br>
+            <input id="website" name="website" placeholder="WEBSITE" th:field="*{website}" type="text">
+            <span th:errors="*{website}" th:if="${#fields.hasErrors('website')}"></span>
+            <br>
+            <br>
 
-            <input id="role" name="role" th:field="*{role}" type="hidden">
-
-            <input type="submit" value="UPDATE ADMIN">
+            <input type="submit" value="UPDATE INSTITUTION">
         </form>
     </body>
 </html>

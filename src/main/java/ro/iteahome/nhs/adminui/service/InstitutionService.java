@@ -1,5 +1,6 @@
 package ro.iteahome.nhs.adminui.service;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -62,13 +63,13 @@ public class InstitutionService {
     }
 
     public Institution findByCui(String Cui) {
-        ResponseEntity<Institution> instituionResponse =
+        ResponseEntity<Institution> institutionResponse =
                 restTemplate.exchange(
-                        INSTITUTIONS_URL + "/by-cui/" + Cui,
+                        INSTITUTIONS_URL + "/by-cui/?cui=" + Cui,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(Cui,getAuthHeaders()),
                         Institution.class);
-        Institution institution = instituionResponse.getBody();
+        Institution institution = institutionResponse.getBody();
         if (institution != null) {
             return institution;
         } else {
@@ -110,9 +111,9 @@ public class InstitutionService {
         if (institution != null) {
             ResponseEntity<Institution> institutionResponse =
                     restTemplate.exchange(
-                            INSTITUTIONS_URL + "/by-cui/" + Cui,
+                            INSTITUTIONS_URL + "/by-cui/?cui="+Cui,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
+                            new HttpEntity<>(Cui,getAuthHeaders()),
                             Institution.class);
             return institutionResponse.getBody();
         } else {

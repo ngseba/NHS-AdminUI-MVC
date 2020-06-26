@@ -1,11 +1,10 @@
 package ro.iteahome.nhs.adminui.controller;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ro.iteahome.nhs.adminui.model.entity.Institution;
 import ro.iteahome.nhs.adminui.service.InstitutionService;
@@ -51,23 +50,29 @@ public class InstitutionController {
     @PostMapping
     public ModelAndView add(@Valid Institution institution) {
         Institution databaseInstitution = institutionService.add(institution);
-        return new ModelAndView("institution/home-role").addObject(databaseInstitution);
+        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
     @GetMapping("/by-id")
     public ModelAndView getById( Institution institution) {
         Institution databaseInstitution = institutionService.findById(institution.getId());
-        return new ModelAndView("institution/home-role").addObject(databaseInstitution);
+        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
-    @PostMapping("/update-form-by-id")
-    public ModelAndView showUpdateFormById(@Valid Institution institution) {
+    @GetMapping("/by-cui")
+    public ModelAndView getByCui( Institution institution) {
+        Institution databaseInstitution = institutionService.findByCui(institution.getCui());
+        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
+    }
+
+    @GetMapping("/update-form-by-id")
+    public ModelAndView showUpdateFormById(Institution institution) {
         Institution databaseInstitution = institutionService.findById(institution.getId());
         return new ModelAndView("institution/update-form").addObject(databaseInstitution);
     }
 
-    @PostMapping("/update-form-by-email")
-    public ModelAndView showUpdateFormByName(@Valid Institution institution) {
+    @GetMapping("/update-form-by-cui")
+    public ModelAndView showUpdateFormByName(Institution institution) {
         Institution databaseInstitution = institutionService.findByCui(institution.getCui());
         return new ModelAndView("institution/update-form").addObject(databaseInstitution);
     }
@@ -75,22 +80,22 @@ public class InstitutionController {
     @PostMapping("/updated-institution")
     public ModelAndView update(@Valid Institution institution) {
         Institution databaseInstitution = institutionService.update(institution);
-        return new ModelAndView("institution/home-role").addObject(databaseInstitution);
+        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
     @PostMapping("/delete-by-id")
     public ModelAndView deleteById(Institution institution) {
         Institution databaseInstitution = institutionService.findById(institution.getId());
         institutionService.deleteById(institution.getId());
-        return new ModelAndView("institution/home-role").addObject(databaseInstitution);
+        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
     @PostMapping("/delete-by-cui")
     public ModelAndView deleteByCui(Institution institution) {
-        System.out.println("WORKS");
         Institution databaseInstitution = institutionService.findByCui(institution.getCui());
         institutionService.deleteByCui(institution.getCui());
-        return new ModelAndView("institution/home-role").addObject(databaseInstitution);
+
+        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
 }
