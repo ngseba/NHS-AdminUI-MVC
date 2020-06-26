@@ -41,8 +41,11 @@
             <br>
             <br>
 
+
             <label for="type">Type:</label><br>
-            <input id="type" name="type" placeholder="TYPE" th:field="*{type}" type="text">
+            <select id="type" name="cars" placeholder="TYPE" th:field="*{type}">
+                <option th:each="institutionType : ${types}" th:value="${institutionType}" th:text="${institutionType}"></option>
+            </select>
             <span th:errors="*{type}" th:if="${#fields.hasErrors('type')}"></span>
             <br>
             <br>

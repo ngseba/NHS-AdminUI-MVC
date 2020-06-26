@@ -47,6 +47,17 @@ public class InstitutionService {
         return institutionResponse.getBody();
     }
 
+    public Object getInstitutionType(){
+        ResponseEntity<Object> institutionResponse =
+                restTemplate.exchange(
+                        INSTITUTIONS_URL + "/retrieve-institution-type",
+                        HttpMethod.GET,
+                        new HttpEntity<>(getAuthHeaders()),
+                        Object.class);
+
+        return institutionResponse.getBody();
+    }
+
     public Institution findById(int id) {
         ResponseEntity<Institution> institutionResponse =
                 restTemplate.exchange(
@@ -67,7 +78,7 @@ public class InstitutionService {
                 restTemplate.exchange(
                         INSTITUTIONS_URL + "/by-cui/?cui=" + Cui,
                         HttpMethod.GET,
-                        new HttpEntity<>(Cui,getAuthHeaders()),
+                        new HttpEntity<>(getAuthHeaders()),
                         Institution.class);
         Institution institution = institutionResponse.getBody();
         if (institution != null) {
@@ -113,7 +124,7 @@ public class InstitutionService {
                     restTemplate.exchange(
                             INSTITUTIONS_URL + "/by-cui/?cui="+Cui,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(Cui,getAuthHeaders()),
+                            new HttpEntity<>(getAuthHeaders()),
                             Institution.class);
             return institutionResponse.getBody();
         } else {

@@ -10,6 +10,7 @@ import ro.iteahome.nhs.adminui.model.entity.Institution;
 import ro.iteahome.nhs.adminui.service.InstitutionService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/medical-institutions")
@@ -25,9 +26,12 @@ public class InstitutionController {
 
 // LINK "GET" REQUESTS: ------------------------------------------------------------------------------------------------
 
+
+
     @GetMapping("/add-form")
-    public String showAddForm(Institution institution) {
-        return "institution/add-form";
+    public ModelAndView showAddForm(Institution institution) {
+        ArrayList types = (ArrayList) institutionService.getInstitutionType();
+        return new ModelAndView("institution/add-form").addObject("types",types);
     }
 
     @GetMapping("/get-form")
@@ -67,14 +71,16 @@ public class InstitutionController {
 
     @GetMapping("/update-form-by-id")
     public ModelAndView showUpdateFormById(Institution institution) {
+        ArrayList types = (ArrayList) institutionService.getInstitutionType();
         Institution databaseInstitution = institutionService.findById(institution.getId());
-        return new ModelAndView("institution/update-form").addObject(databaseInstitution);
+        return new ModelAndView("institution/update-form").addObject(databaseInstitution).addObject("types",types);
     }
 
     @GetMapping("/update-form-by-cui")
-    public ModelAndView showUpdateFormByName(Institution institution) {
+    public ModelAndView showUpdateFormByCui(Institution institution) {
+        ArrayList types = (ArrayList) institutionService.getInstitutionType();
         Institution databaseInstitution = institutionService.findByCui(institution.getCui());
-        return new ModelAndView("institution/update-form").addObject(databaseInstitution);
+        return new ModelAndView("institution/update-form").addObject(databaseInstitution).addObject("types",types);
     }
 
     @PostMapping("/updated-institution")
