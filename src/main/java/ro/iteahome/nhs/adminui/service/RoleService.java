@@ -5,9 +5,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
@@ -17,7 +14,7 @@ import ro.iteahome.nhs.adminui.model.entity.Role;
 import java.util.Base64;
 
 @Service
-public class RoleService implements UserDetailsService {
+public class RoleService {
 
 // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
@@ -28,7 +25,8 @@ public class RoleService implements UserDetailsService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
+    //    private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
+    private final String ROLES_URL = "http://localhost:8081/roles";
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
 
@@ -121,24 +119,6 @@ public class RoleService implements UserDetailsService {
             return roleResponse.getBody();
         } else {
             throw new GlobalNotFoundException("ROLE");
-        }
-    }
-
-// OVERRIDDEN "UserDetailsService" METHODS: ----------------------------------------------------------------------------
-
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        UserDetails roleDetails =
-                restTemplate.exchange(
-                        ROLES_URL + "/by-name/" + name,
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        UserDetails.class)
-                        .getBody();
-        if (roleDetails != null) {
-            return roleDetails;
-        } else {
-            throw new UsernameNotFoundException(name);
         }
     }
 }

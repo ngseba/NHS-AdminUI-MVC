@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>NHS MANAGEMENT</title>
+    </head>
+
+    <body>
+
+        <div th:include="admin-categories :: categories"></div>
+
+        <p>YOUR LAST "ADMIN" REQUEST'S RESULT:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>EMAIL</th>
+                    <th>PHONE NUMBER</th>
+                    <th>STATUS</th>
+                    <th>ROLES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${adminDTO.id}"></td>
+                    <td th:text="${adminDTO.firstName}"></td>
+                    <td th:text="${adminDTO.lastName}"></td>
+                    <td th:text="${adminDTO.email}"></td>
+                    <td th:text="${adminDTO.phoneNoRo}"></td>
+                    <td th:text="${adminDTO.status}"></td>
+                    <td th:text="${adminDTO.role}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>

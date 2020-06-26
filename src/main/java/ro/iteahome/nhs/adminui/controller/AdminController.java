@@ -63,19 +63,19 @@ public class AdminController {
     @PostMapping
     public ModelAndView add(@Valid AdminCreationDTO adminCreationDTO) {
         AdminDTO adminDTO = adminService.add(adminCreationDTO);
-        return new ModelAndView("admin/temp-crud-result").addObject(adminDTO);
+        return new ModelAndView("admin/home-admin").addObject(adminDTO);
     }
 
     @GetMapping("/by-id")
     public ModelAndView getById(AdminDTO adminDTO) {
         AdminDTO databaseAdminDTO = adminService.findById(adminDTO.getId());
-        return new ModelAndView("admin/temp-crud-result").addObject(databaseAdminDTO);
+        return new ModelAndView("admin/home-admin").addObject(databaseAdminDTO);
     }
 
     @GetMapping("/by-email")
     public ModelAndView getByEmail(AdminDTO adminDTO) {
         AdminDTO databaseAdminDTO = adminService.findByEmail(adminDTO.getEmail());
-        return new ModelAndView("admin/temp-crud-result").addObject(databaseAdminDTO);
+        return new ModelAndView("admin/home-admin").addObject(databaseAdminDTO);
     }
 
     @PostMapping("/update-form-by-id")
@@ -93,21 +93,21 @@ public class AdminController {
     @PostMapping("/updated-admin")
     public ModelAndView update(@Valid Admin admin) {
         AdminDTO adminDTO = adminService.update(admin);
-        return new ModelAndView("admin/temp-crud-result").addObject(adminDTO);
+        return new ModelAndView("admin/home-admin").addObject(adminDTO);
     }
 
     @PostMapping("/delete-by-id")
     public ModelAndView deleteById(AdminDTO adminDTO) {
         AdminDTO targetAdminDTO = adminService.findById(adminDTO.getId());
         adminService.deleteById(adminDTO.getId());
-        return new ModelAndView("admin/temp-crud-result").addObject(targetAdminDTO);
+        return new ModelAndView("admin/home-admin").addObject(targetAdminDTO);
     }
 
     @PostMapping("/delete-by-email")
     public ModelAndView deleteByEmail(AdminDTO adminDTO) {
         AdminDTO targetAdminDTO = adminService.findByEmail(adminDTO.getEmail());
         adminService.deleteByEmail(adminDTO.getEmail());
-        return new ModelAndView("admin/temp-crud-result").addObject(targetAdminDTO);
+        return new ModelAndView("admin/home-admin").addObject(targetAdminDTO);
     }
 
 // OTHER METHODS: ------------------------------------------------------------------------------------------------------
