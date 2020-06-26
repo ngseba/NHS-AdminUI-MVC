@@ -5,8 +5,14 @@
     </head>
 
     <body>
+        <p><strong>WELCOME, ADMIN.</strong></p>
 
-        <div th:include="admin-categories :: categories"></div>
+        <br>
+        <br>
+
+        <div th:include="home-initial :: categories"></div>
+        <br>
+        <br>
 
         <p>YOUR LAST "ADMIN" REQUEST'S RESULT:</p>
 
@@ -34,6 +40,9 @@
                 </tr>
             </tbody>
         </table>
+        <br>
+
+        <a href="/home/home-initial">CLEAR RESULT</a>
 
     </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
+import ro.iteahome.nhs.adminui.model.dto.RoleCreationDTO;
 import ro.iteahome.nhs.adminui.model.dto.RoleDTO;
 import ro.iteahome.nhs.adminui.model.entity.Role;
 
@@ -38,84 +39,85 @@ public class RoleService {
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
-    public Role add(RoleDTO roleDTO) {
-        ResponseEntity<Role> roleResponse =
+    public RoleDTO add(RoleCreationDTO roleCreationDTO) {
+        ResponseEntity<RoleDTO> roleResponse =
                 restTemplate.exchange(
                         ROLES_URL,
                         HttpMethod.POST,
-                        new HttpEntity<>(roleDTO, getAuthHeaders()),
-                        Role.class);
+                        new HttpEntity<>(roleCreationDTO, getAuthHeaders()),
+                        RoleDTO.class);
         return roleResponse.getBody();
     }
 
-    public Role findById(int id) {
-        ResponseEntity<Role> roleResponse =
+    public RoleDTO findById(int id) {
+        ResponseEntity<RoleDTO> roleResponse =
                 restTemplate.exchange(
                         ROLES_URL + "/by-id/" + id,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Role.class);
-        Role role = roleResponse.getBody();
-        if (role != null) {
-            return role;
+                        RoleDTO.class);
+        RoleDTO roleDTO = roleResponse.getBody();
+        if (roleDTO != null) {
+            return roleDTO;
         } else {
             throw new GlobalNotFoundException("ROLE");
         }
     }
 
-    public Role findByName(String name) {
-        ResponseEntity<Role> roleResponse =
+    public RoleDTO findByName(String name) {
+        ResponseEntity<RoleDTO> roleResponse =
                 restTemplate.exchange(
                         ROLES_URL + "/by-name/" + name,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Role.class);
-        Role role = roleResponse.getBody();
-        if (role != null) {
-            return role;
+                        RoleDTO.class);
+        RoleDTO roleDTO = roleResponse.getBody();
+        if (roleDTO != null) {
+            return roleDTO;
         } else {
             throw new GlobalNotFoundException("ROLE");
         }
     }
 
-    public Role update(Role newRole) {
-        Role role = findById(newRole.getId());
-        if (role != null) {
-            restTemplate.exchange(
-                    ROLES_URL,
-                    HttpMethod.PUT,
-                    new HttpEntity<>(newRole, getAuthHeaders()),
-                    Role.class);
-            return findById(newRole.getId());
-        } else {
-            throw new GlobalNotFoundException("ROLE");
-        }
-    }
-
-    public Role deleteById(int id) {
-        Role role = findById(id);
-        if (role != null) {
-            ResponseEntity<Role> roleResponse =
+    public RoleDTO update(Role role) {
+        RoleDTO roleDTO = findById(role.getId());
+        if (roleDTO != null) {
+            ResponseEntity<RoleDTO> roleResponse =
                     restTemplate.exchange(
-                            ROLES_URL + "/by-id/?id=" + id,
+                            ROLES_URL,
+                            HttpMethod.PUT,
+                            new HttpEntity<>(role, getAuthHeaders()),
+                            RoleDTO.class);
+            return  roleResponse.getBody();
+        } else {
+            throw new GlobalNotFoundException("ROLE");
+        }
+    }
+
+    public RoleDTO deleteById(int id) {
+        RoleDTO roleDTO = findById(id);
+        if (roleDTO != null) {
+            ResponseEntity<RoleDTO> roleResponse =
+                    restTemplate.exchange(
+                            ROLES_URL + "/by-id/" + id,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
-                            Role.class);
+                            RoleDTO.class);
             return roleResponse.getBody();
         } else {
             throw new GlobalNotFoundException("ROLE");
         }
     }
 
-    public Role deleteByName(String name) {
-        Role role = findByName(name);
-        if (role != null) {
-            ResponseEntity<Role> roleResponse =
+    public RoleDTO deleteByName(String name) {
+        RoleDTO roleDTO = findByName(name);
+        if (roleDTO != null) {
+            ResponseEntity<RoleDTO> roleResponse =
                     restTemplate.exchange(
-                            ROLES_URL + "/by-id/?id=" + name,
+                            ROLES_URL + "/by-name/" + name,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
-                            Role.class);
+                            RoleDTO.class);
             return roleResponse.getBody();
         } else {
             throw new GlobalNotFoundException("ROLE");

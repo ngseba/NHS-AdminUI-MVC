@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>GET ADMIN</title>
+        <title>GET ROLE</title>
     </head>
 
     <body>
-        <p><strong>GET ADMIN:</strong></p>
+        <p><strong>GET ROLE:</strong></p>
         <br>
 
-        <form method="GET" th:action="@{/admins/by-id}" th:object="${adminDTO}">
-            <label for="id">GET BY ID:</label><br>
-            <input id="id" name="id" placeholder="ADMIN ID" th:field="*{id}" type="text">
+        <form method="GET" th:action="@{/roles/by-id}" th:object="${roleDTO}">
+            <label for="id">GET BY ROLE ID:</label><br>
+            <input id="id" name="id" placeholder="ROLE ID" th:field="*{id}" type="text">
             <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <input type="submit" value="GET ADMIN">
+            <input type="submit" value="GET ROLE">
         </form>
         <br>
 
-        <form method="GET" th:action="@{/admins/by-email}" th:object="${adminDTO}">
-            <label for="email">GET BY EMAIL:</label><br>
-            <input id="email" name="email" placeholder="ADMIN EMAIL" th:field="*{email}" type="email">
-            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-            <input type="submit" value="GET ADMIN">
+        <form method="GET" th:action="@{/roles/by-name}" th:object="${roleDTO}">
+            <label for="name">GET BY ROLE NAME:</label><br>
+            <input id="name" name="name" placeholder="ROLE NAME" th:field="*{name}" type="name">
+            <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
+            <input type="submit" value="GET ROLE">
         </form>
     </body>
 </html>

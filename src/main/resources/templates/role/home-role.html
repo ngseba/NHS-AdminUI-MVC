@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>WELCOME</title>
+    </head>
+
+    <body>
+        <p><strong>WELCOME, ADMIN.</strong></p>
+
+        <br>
+        <br>
+
+        <div th:include="home-initial :: categories"></div>
+        <br>
+        <br>
+
+        <p>YOUR LAST "ADMIN" REQUEST'S RESULT:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ROLE NAME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${roleDTO.id}"></td>
+                    <td th:text="${roleDTO.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <a href="/home/home-initial">CLEAR RESULT</a>
+
+    </body>
+</html>
