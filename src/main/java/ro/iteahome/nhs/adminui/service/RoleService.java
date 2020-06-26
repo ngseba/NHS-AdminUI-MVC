@@ -26,8 +26,7 @@ public class RoleService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    //    private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
-    private final String ROLES_URL = "http://localhost:8081/roles";
+    private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
 
@@ -88,7 +87,7 @@ public class RoleService {
                             HttpMethod.PUT,
                             new HttpEntity<>(role, getAuthHeaders()),
                             RoleDTO.class);
-            return  roleResponse.getBody();
+            return roleResponse.getBody();
         } else {
             throw new GlobalNotFoundException("ROLE");
         }
