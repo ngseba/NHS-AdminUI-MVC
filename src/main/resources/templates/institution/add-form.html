@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>ADD INSTITUTION</title>
+    </head>
+
+    <body>
+        <p><strong>ADD INSTITUTION:</strong></p>
+        <br>
+
+        <form method="POST" th:action="@{/medical-institutions}" th:object="${institution}">
+
+            <label for="email">EMAIL:</label><br>
+            <input id="email" name="email" placeholder="EMAIL" th:field="*{email}" type="email">
+            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+            <br>
+            <br>
+
+            <label for="address">Address:</label><br>
+            <input id="address" name="address" placeholder="ADDRESS" th:field="*{address}" type="text">
+            <span th:address="*{address}" th:if="${#fields.hasErrors('address')}"></span>
+            <br>
+            <br>
+
+            <label for="cui">CUI:</label><br>
+            <input id="cui" name="cui" placeholder="CUI" th:field="*{cui}" type="text">
+            <span th:cui="*{cui}" th:if="${#fields.hasErrors('cui')}"></span>
+            <br>
+            <br>
+
+            <label for="name">NAME:</label><br>
+            <input id="name" name="name" placeholder="NAME" th:field="*{name}" type="text">
+            <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
+            <br>
+            <br>
+
+            <label for="phoneNoRo">ROMANIAN PHONE NUMBER:</label><br>
+            <input id="phoneNoRo" name="phoneNoRo" placeholder="ROMANIAN PHONE NUMBER" th:field="*{phoneNoRo}"
+                   type="text">
+            <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
+            <br>
+            <br>
+
+            <label for="type">Type:</label><br>
+            <input id="type" name="type" placeholder="TYPE" th:field="*{type}" type="text">
+            <span th:errors="*{type}" th:if="${#fields.hasErrors('type')}"></span>
+            <br>
+            <br>
+
+            <label for="website">Website:</label><br>
+            <input id="website" name="website" placeholder="WEBSITE" th:field="*{website}" type="text">
+            <span th:errors="*{website}" th:if="${#fields.hasErrors('website')}"></span>
+            <br>
+            <br>
+
+            <br>
+
+            <input type="submit" value="ADD INSTITUTION">
+        </form>
+    </body>
+</html>
