@@ -1,0 +1,59 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.btn-block + .btn-block {
+    margin-top: 0;
+}
+
+
+.main-menu {
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 15px;
+    margin: auto;
+    width: 30%;
+}
+
+.popover-body {
+    padding-right: 20px;
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.popover {
+    max-width: 400px;
+    border: 2px dotted white;
+}
+
+.popover-header {
+    text-align: center;
+}
+
+li {
+    margin-top: 10px;
+    margin-left: 10px;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+
+
