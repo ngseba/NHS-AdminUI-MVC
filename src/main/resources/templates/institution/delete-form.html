@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>DELETE INSTITUTION</title>
+    </head>
+
+    <body>
+        <p><strong>DELETE INSTITUTION:</strong></p>
+        <br>
+
+        <form method="POST" th:action="@{/medical-institutions/delete-by-id}" th:object="${institution}">
+            <label for="id">ID:</label><br>
+            <input id="id" name="id" placeholder="DELETE BY ID" th:field="*{id}" type="id">
+            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
+            <input type="submit" value="DELETE">
+        </form>
+        <br>
+        <br>
+
+        <form method="POST" th:action="@{/medical-institutions/delete-by-cui}" th:object="${institution}">
+            <label for="cui">CUI:</label><br>
+            <input id="cui" name="cui" placeholder="DELETE BY CUI" th:field="*{cui}" type="text">
+            <span th:errors="*{cui}" th:if="${#fields.hasErrors('cui')}"></span>
+            <input type="submit" value="DELETE">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>GET INSTITUTION</title>
+    </head>
+
+    <body>
+        <p><strong>GET INSTITUTION:</strong></p>
+        <br>
+
+        <form method="GET" th:action="@{/medical-institutions/by-id}" th:object="${institution}">
+            <label for="id">GET BY ID:</label><br>
+            <input id="id" name="id" placeholder="INSTITUTION ID" th:field="*{id}" type="text">
+            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
+            <input type="submit" value="GET INSTITUTION">
+        </form>
+        <br>
+
+        <form method="GET" th:action="@{/medical-institutions/by-cui}" th:object="${institution}">
+            <label for="cui">GET BY CUI:</label><br>
+            <input id="cui" name="email" placeholder="INSTITUTION CUI" th:field="*{cui}" type="text">
+            <span th:errors="*{cui}" th:if="${#fields.hasErrors('cui')}"></span>
+            <input type="submit" value="GET INSTITUTION">
+        </form>
+    </body>
+</html>
