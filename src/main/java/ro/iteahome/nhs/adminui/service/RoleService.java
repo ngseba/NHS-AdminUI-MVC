@@ -26,8 +26,8 @@ public class RoleService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    //private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
-    private final String ROLES_URL = "http://localhost:8081/roles";
+    private final String ROLES_URL = "http://nhsbackendstage.myserverapps.com/roles";
+    //private final String ROLES_URL = "http://localhost:8081/roles";
 
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
