@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>ADD DOCTOR</title>
+    <title>UPDATE NURSE</title>
 </head>
 
 <body>
-<p><strong>ADD DOCTOR:</strong></p>
+<p><strong>UPDATE NURSE:</strong></p>
 <br>
 
-<form method="POST" th:action="@{/doctors}" th:object="${doctor}">
-
+<form method="POST" th:action="@{/nurses/updated-doctor}" th:object="${nurse}">
+    <input id="id" name="id" th:field="*{id}" type="hidden">
     <label for="cnp">CNP:</label><br>
     <input id="cnp" name="cnp" placeholder="CNP" th:field="*{cnp}" type="text">
     <span th:errors="*{cnp}" th:if="${#fields.hasErrors('cnp')}"></span>
@@ -47,41 +47,26 @@
     <br>
     <br>
 
-<!--    <label for="specialties">SPECIALTIES:</label><br>-->
-<!--    <input id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}"-->
-<!--           type="text">-->
-<!--    <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>-->
-<!--    <br>-->
-<!--    <br>-->
 
+        <label for="specialties">SPECIALTIES:</label><br>
+        <select id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}">
+            <option th:each="nurseSpecialty : ${nurseSpecialties}" th:value="${nurseSpecialty}" th:text="${nurseSpecialty}"></option>
+        </select>
+        <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>
+        <br>
+        <br>
 
-<!--    <label for="title">Title:</label><br>-->
-<!--    <input id="title" name="title" placeholder="TITLE" th:field="*{title}"-->
-<!--           type="text">-->
-<!--    <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>-->
-<!--    <br>-->
-<!--    <br>-->
-
-
-    <label for="specialties">SPECIALTIES:</label><br>
-    <select id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}">
-        <option th:each="specialty : ${doctorSpecialties}" th:value="${specialty}" th:text="${specialty}"></option>
-    </select>
-    <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>
-    <br>
-    <br>
-
-    <label for="title">Title:</label><br>
-    <select id="title" name="title" placeholder="TYPE" th:field="*{title}">
-        <option th:each="doctorTitle : ${doctorTitles}" th:value="${doctorTitle}" th:text="${doctorTitle}"></option>
-    </select>
-    <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
-    <br>
-    <br>
+        <label for="title">Title:</label><br>
+        <select id="title" name="title" placeholder="TYPE" th:field="*{title}">
+            <option th:each="nurseTitle : ${nurseTitles}" th:value="${nurseTitle}" th:text="${nurseTitle}"></option>
+        </select>
+        <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
+        <br>
+        <br>
 
     <br>
 
-    <input type="submit" value="ADD DOCTOR">
+    <input type="submit" value="UPDATE NURSE">
 </form>
 </body>
 </html>

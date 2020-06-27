@@ -30,10 +30,10 @@ public class DoctorController {
 
     @GetMapping("/add-form")
     public ModelAndView showAddForm(Doctor doctor) {
-        //ArrayList specialties = (ArrayList) doctorService.getSpecialties();
-        //ArrayList titles = (ArrayList) doctorService.getTitles();
-        return new ModelAndView("doctor/add-form");
-        //.addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
+        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
+        ArrayList titles = (ArrayList) doctorService.getTitles();
+        return new ModelAndView("doctor/add-form")
+        .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
 
     }
 
@@ -74,20 +74,20 @@ public class DoctorController {
 
     @GetMapping("/update-form-by-id")
     public ModelAndView showUpdateFormById(Doctor doctor) {
-        //ArrayList specialties = (ArrayList) doctorService.getSpecialties();
-        //ArrayList titles = (ArrayList) doctorService.getTitles();
+        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
+        ArrayList titles = (ArrayList) doctorService.getTitles();
         Doctor databaseDoctor = doctorService.findById(doctor.getId());
-        return new ModelAndView("doctor/update-form").addObject(databaseDoctor);
-        //.addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
+        return new ModelAndView("doctor/update-form").addObject(databaseDoctor)
+        .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
     }
 
     @GetMapping("/update-form-by-email")
     public ModelAndView showUpdateFormByEmail(Doctor doctor) {
-        //ArrayList specialties = (ArrayList) doctorService.getSpecialties();
-        //ArrayList titles = (ArrayList) doctorService.getTitles();
+        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
+        ArrayList titles = (ArrayList) doctorService.getTitles();
         Doctor databaseDoctor = doctorService.findByEmail(doctor.getEmail());
-        return new ModelAndView("doctor/update-form").addObject(databaseDoctor);
-        //.addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
+        return new ModelAndView("doctor/update-form").addObject(databaseDoctor)
+        .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
     }
 
     @PostMapping("/updated-doctor")
