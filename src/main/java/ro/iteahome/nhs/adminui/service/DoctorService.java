@@ -25,6 +25,8 @@ public class DoctorService {
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
     private final String DOCTORS_URL = "https://nhsbackendstage.myserverapps.com/doctors";
+    //private final String DOCTORS_URL = "http://localhost:8081/doctors";
+
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
 

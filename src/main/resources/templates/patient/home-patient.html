@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>NHS MANAGEMENT</title>
+    </head>
+
+    <body>
+        <p><strong>WELCOME, PATIENT.</strong></p>
+
+        <br>
+        <br>
+
+        <div th:include="home-initial :: categories"></div>
+        <br>
+        <br>
+
+        <p>YOUR LAST "PATIENT" REQUEST'S RESULT:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CNP</th>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>EMAIL</th>
+                    <th>PHONE NUMBER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${patient.id}"></td>
+                    <td th:text="${patient.cnp}"></td>
+                    <td th:text="${patient.firstName}"></td>
+                    <td th:text="${patient.lastName}"></td>
+                    <td th:text="${patient.email}"></td>
+                    <td th:text="${patient.phoneNoRo}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <a href="/home/home-initial">CLEAR RESULT</a>
+
+    </body>
+</html>
