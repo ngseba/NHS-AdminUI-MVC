@@ -47,17 +47,6 @@ public class DoctorService {
         return doctorResponse.getBody();
     }
 
-    public Object getDoctorTitle(){
-        ResponseEntity<Object> doctorResponse =
-                restTemplate.exchange(
-                        DOCTORS_URL + "/retrieve-doctor-title",
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        Object.class);
-
-        return doctorResponse.getBody();
-    }
-
     public Object getSpecialties(){
         ResponseEntity<Object> doctorResponse =
                 restTemplate.exchange(
@@ -84,7 +73,7 @@ public class DoctorService {
     public boolean existsByCnpAndLicenseNo(String cnp,String licenseNo) {
         ResponseEntity<Boolean> doctorExists =
                 restTemplate.exchange(
-                DOCTORS_URL + "/retrieve-doctor-specialty/?cnp="+cnp+"&licenseNo="+licenseNo,
+                DOCTORS_URL + "/existence/by-cnp-and-license-number/?cnp="+cnp+"&licenseNo="+licenseNo,
                 HttpMethod.GET,
                 new HttpEntity<>(getAuthHeaders()),
                 Boolean.class);
