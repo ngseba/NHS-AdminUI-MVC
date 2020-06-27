@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>GET DOCTOR</title>
+</head>
+
+<body>
+<p><strong>GET DOCTOR:</strong></p>
+<br>
+
+<form method="GET" th:action="@{/doctors/by-id}" th:object="${doctor}">
+    <label for="id">GET BY ID:</label><br>
+    <input id="id" name="id" placeholder="DOCTOR ID" th:field="*{id}" type="text">
+    <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
+    <input type="submit" value="GET DOCTOR">
+</form>
+<br>
+
+<form method="GET" th:action="@{/doctors/by-email}" th:object="${doctor}">
+    <label for="email">GET BY EMAIL:</label><br>
+    <input id="email" name="email" placeholder="DOCTOR EMAIL" th:field="*{email}" type="text">
+    <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+    <input type="submit" value="GET DOCTOR">
+</form>
+</body>
+</html>
