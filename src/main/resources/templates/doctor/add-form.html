@@ -1,87 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>ADD DOCTOR</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NHS Add Doctor</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
 </head>
 
-<body>
-<p><strong>ADD DOCTOR:</strong></p>
-<br>
-
-<form method="POST" th:action="@{/doctors}" th:object="${doctor}">
-
-    <label for="cnp">CNP:</label><br>
-    <input id="cnp" name="cnp" placeholder="CNP" th:field="*{cnp}" type="text">
-    <span th:errors="*{cnp}" th:if="${#fields.hasErrors('cnp')}"></span>
-    <br>
-    <br>
-
-    <label for="email">EMAIL:</label><br>
-    <input id="email" name="email" placeholder="EMAIL" th:field="*{email}" type="email">
-    <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-    <br>
-    <br>
-
-    <label for="firstName">First Name:</label><br>
-    <input id="firstName" name="firstName" placeholder="FIRST NAME" th:field="*{firstName}" type="text">
-    <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
-    <br>
-    <br>
-
-    <label for="lastName">Last Name:</label><br>
-    <input id="lastName" name="lastName" placeholder="LAST NAME" th:field="*{lastName}" type="text">
-    <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
-    <br>
-    <br>
-
-    <label for="licenseNo">License No:</label><br>
-    <input id="licenseNo" name="licenseNo" placeholder="LICENSE NO" th:field="*{licenseNo}" type="text">
-    <span th:errors="*{licenseNo}" th:if="${#fields.hasErrors('licenseNo')}"></span>
-    <br>
-    <br>
-
-    <label for="phoneNoRo">ROMANIAN PHONE NUMBER:</label><br>
-    <input id="phoneNoRo" name="phoneNoRo" placeholder="ROMANIAN PHONE NUMBER" th:field="*{phoneNoRo}"
-           type="text">
-    <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
-    <br>
-    <br>
-
-<!--    <label for="specialties">SPECIALTIES:</label><br>-->
-<!--    <input id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}"-->
-<!--           type="text">-->
-<!--    <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>-->
-<!--    <br>-->
-<!--    <br>-->
+<body class="text-center">
 
 
-<!--    <label for="title">Title:</label><br>-->
-<!--    <input id="title" name="title" placeholder="TITLE" th:field="*{title}"-->
-<!--           type="text">-->
-<!--    <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>-->
-<!--    <br>-->
-<!--    <br>-->
+<form class="form-nhs" method="POST" th:action="@{/doctors}" th:object="${doctor}">
+
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Add Doctor form</h1>
+
+    <div class="form-label-group">
+        <input id="email" name="email" th:field="*{email}" type="email" class="form-control"
+               placeholder="Email address" autofocus>
+        <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+        <label for="email">Email address</label>
+    </div>
 
 
-    <label for="specialties">SPECIALTIES:</label><br>
-    <select id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}">
-        <option th:each="specialty : ${doctorSpecialties}" th:value="${specialty}" th:text="${specialty}"></option>
-    </select>
-    <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>
-    <br>
-    <br>
+    <div class="form-label-group">
+        <select id="specialties" name="specialties" th:field="*{specialties}"
+                class="form-control">
+            <option value="" selected disabled>Please select a speciality</option>
+            <option th:each="specialty : ${doctorSpecialties}" th:value="${specialty}" th:text="${specialty}"></option>
+        </select>
+        <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>
+    </div>
 
-    <label for="title">Title:</label><br>
-    <select id="title" name="title" placeholder="TYPE" th:field="*{title}">
-        <option th:each="doctorTitle : ${doctorTitles}" th:value="${doctorTitle}" th:text="${doctorTitle}"></option>
-    </select>
-    <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
-    <br>
-    <br>
+    <div class="form-label-group">
+        <select id="title" name="title" th:field="*{title}" class="form-control">
+            <option value="" selected disabled>Please select a title</option>
+            <option th:each="doctorTitle : ${doctorTitles}" th:value="${doctorTitle}" th:text="${doctorTitle}"></option>
+        </select>
+        <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
+    </div>
 
-    <br>
+    <div class="form-label-group">
+        <input id="firstName" name="firstName" th:field="*{firstName}" type="text" class="form-control"
+               placeholder="First Name">
+        <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
+        <label for="firstName">First Name</label>
+    </div>
 
-    <input type="submit" value="ADD DOCTOR">
-</form>
+    <div class="form-label-group">
+        <input id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control"
+               placeholder="Last Name">
+        <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
+        <label for="lastName">Last Name</label>
+    </div>
+
+    <div class="form-label-group">
+        <input id="cnp" name="cnp" th:field="*{cnp}" type="text" class="form-control"
+               placeholder="CNP">
+        <span th:errors="*{cnp}" th:if="${#fields.hasErrors('cnp')}"></span>
+        <label for="lastName">CNP</label>
+    </div>
+
+    <div class="form-label-group">
+        <input id="licenseNo" name="licenseNo" th:field="*{licenseNo}" type="text" class="form-control"
+               placeholder="License No.">
+        <span th:errors="*{licenseNo}" th:if="${#fields.hasErrors('licenseNo')}"></span>
+        <label for="lastName">License No.</label>
+    </div>
+
+    <div class="form-label-group">
+        <input id="phoneNoRo" name="phoneNoRo" th:field="*{phoneNoRo}" type="text" class="form-control"
+               placeholder="Romanian Phone Number">
+        <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
+        <label for="phoneNoRo">Romanian Phone Number</label>
+    </div>
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Doctor</button>
+
+    <br><br>
+    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <br><br>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></form>
 </body>
 </html>

@@ -1,27 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>DELETE DOCTOR</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NHS Delete Doctor</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
-    <body>
-        <p><strong>DELETE DOCTOR:</strong></p>
-        <br>
 
-        <form method="POST" th:action="@{/doctors/delete-by-id}" th:object="${doctor}">
-            <label for="id">ID:</label><br>
-            <input id="id" name="id" placeholder="DELETE BY DOCTOR ID" th:field="*{id}" type="id">
+    <!-- Bootstrap core CSS -->
+    <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-center">
+
+<div class="form-nhs">
+
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Delete Doctor form</h1>
+
+    <form class="form-nhs" method="POST" th:action="@{/doctors/delete-by-id}" th:object="${doctor}">
+
+
+        <div class="form-label-group">
+            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
+                   placeholder="ID" autofocus>
             <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <input type="submit" value="DELETE DOCTOR">
-        </form>
-        <br>
-        <br>
+            <label for="id">ID</label>
+        </div>
 
-        <form method="POST" th:action="@{/doctors/delete-by-email}" th:object="${doctor}">
-            <label for="email">DOCTOR EMAIL:</label><br>
-            <input id="email" name="email" placeholder="DELETE BY DOCTOR EMAIL" th:field="*{email}" type="email">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Doctor</button>
+    </form>
+
+    <form class="form-nhs" method="POST" th:action="@{/doctors/delete-by-email}" th:object="${doctor}">
+
+        <div class="form-label-group">
+            <input id="email" name="email" th:field="*{email}" type="email" class="form-control"
+                   placeholder="Email">
             <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-            <input type="submit" value="DELETE DOCTOR">
-        </form>
-    </body>
+            <label for="email">Email</label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Doctor</button>
+    </form>
+    <br><br>
+    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <br><br>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></div>
+</body>
 </html>
+
