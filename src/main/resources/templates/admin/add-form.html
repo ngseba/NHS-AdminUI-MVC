@@ -1,48 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>ADD ADMIN</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NHS Add Admin</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
-    <body>
-        <p><strong>ADD ADMIN:</strong></p>
-        <br>
 
-        <form method="POST" th:action="@{/admins}" th:object="${adminCreationDTO}">
+    <!-- Bootstrap core CSS -->
+    <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-            <label for="email">EMAIL:</label><br>
-            <input id="email" name="email" placeholder="EMAIL" th:field="*{email}" type="email">
-            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-            <br>
-            <br>
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
 
-            <label for="password">PASSWORD:</label><br>
-            <input id="password" name="password" placeholder="PASSWORD" th:field="*{password}" type="password">
-            <span th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span>
-            <br>
-            <br>
+<body class="text-center">
 
-            <label for="firstName">FIRST NAME:</label><br>
-            <input id="firstName" name="firstName" placeholder="FIRST NAME" th:field="*{firstName}" type="text">
-            <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
-            <br>
-            <br>
 
-            <label for="lastName">LAST NAME:</label><br>
-            <input id="lastName" name="lastName" placeholder="LAST NAME" th:field="*{lastName}" type="text">
-            <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
-            <br>
-            <br>
+<form class="form-nhs" method="POST" th:action="@{/admins}" th:object="${adminCreationDTO}">
 
-            <label for="phoneNoRo">ROMANIAN PHONE NUMBER:</label><br>
-            <input id="phoneNoRo" name="phoneNoRo" placeholder="ROMANIAN PHONE NUMBER" th:field="*{phoneNoRo}"
-                   type="text">
-            <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
-            <br>
-            <br>
-            <br>
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Add Admin form</h1>
 
-            <input type="submit" value="ADD ADMIN">
-        </form>
-    </body>
+    <div class="form-label-group">
+        <input id="email" name="email" th:field="*{email}" type="email" class="form-control"
+               placeholder="Email address" autofocus>
+        <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+        <label for="email">Email address</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="password" class="form-control" placeholder="Password" th:field="*{password}">
+        <span th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span>
+        <label for="password">Password</label>
+    </div>
+
+    <div class="form-label-group">
+        <input id="firstName" name="firstName" th:field="*{firstName}" type="text" class="form-control"
+               placeholder="First Name" autofocus>
+        <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
+        <label for="firstName">First Name</label>
+    </div>
+
+    <div class="form-label-group">
+        <input id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control"
+               placeholder="Last Name">
+        <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
+        <label for="lastName">Last Name</label>
+    </div>
+
+
+    <div class="form-label-group">
+        <input id="phoneNoRo" name="phoneNoRo" th:field="*{phoneNoRo}" type="text" class="form-control"
+               placeholder="Romanian Phone Number">
+        <span th:errors="*{phoneNoRo}" th:if="${#fields.hasErrors('phoneNoRo')}"></span>
+        <label for="phoneNoRo">Romanian Phone Number</label>
+    </div>
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Admin</button>
+
+    <br><br>
+    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <br><br>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></form>
+</body>
 </html>
