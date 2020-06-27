@@ -1,26 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>GET ROLE</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NHS Get Role</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
-    <body>
-        <p><strong>GET ROLE:</strong></p>
-        <br>
 
-        <form method="GET" th:action="@{/roles/by-id}" th:object="${roleDTO}">
-            <label for="id">GET BY ROLE ID:</label><br>
-            <input id="id" name="id" placeholder="ROLE ID" th:field="*{id}" type="text">
+    <!-- Bootstrap core CSS -->
+    <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-center">
+<div class="form-nhs">
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Get Role form</h1>
+
+    <form class="form-nhs" method="GET" th:action="@{/roles/by-id}" th:object="${roleDTO}">
+
+
+        <div class="form-label-group">
+            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
+                   placeholder="Role ID" autofocus>
             <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <input type="submit" value="GET ROLE">
-        </form>
-        <br>
+            <label for="id">Role ID</label>
+        </div>
 
-        <form method="GET" th:action="@{/roles/by-name}" th:object="${roleDTO}">
-            <label for="name">GET BY ROLE NAME:</label><br>
-            <input id="name" name="name" placeholder="ROLE NAME" th:field="*{name}" type="name">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Get Role</button>
+    </form>
+
+
+    <form class="form-nhs" method="GET" th:action="@{/roles/by-name}" th:object="${roleDTO}">
+
+
+        <div class="form-label-group">
+            <input id="name" name="id" th:field="*{name}" type="name" class="form-control"
+                   placeholder="Role name">
             <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
-            <input type="submit" value="GET ROLE">
-        </form>
-    </body>
+            <label for="id">Role name</label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Get Role</button>
+    </form>
+
+
+    <br><br>
+    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <br><br>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></div>
+</body>
 </html>

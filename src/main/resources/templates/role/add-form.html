@@ -1,23 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>ADD ROLE</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NHS Add Role</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
-    <body>
-        <p><strong>ADD ROLE:</strong></p>
-        <br>
 
-        <form method="POST" th:action="@{/roles}" th:object="${roleCreationDTO}">
+    <!-- Bootstrap core CSS -->
+    <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-            <label for="name">ROLE NAME:</label><br>
-            <input id="name" name="name" placeholder="ROLE NAME" th:field="*{name}" type="text">
-            <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
-            <br>
-            <br>
-            <br>
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
 
-            <input type="submit" value="ADD ROLE">
-        </form>
-    </body>
+<body class="text-center">
+
+
+<form class="form-nhs" method="POST" th:action="@{/roles}" th:object="${roleCreationDTO}">
+
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Add Role form</h1>
+
+    <div class="form-label-group">
+        <input id="name" name="name" th:field="*{name}" type="text" class="form-control"
+               placeholder="Role name" autofocus>
+        <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
+        <label for="name">Role name</label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Role</button>
+
+    <br><br>
+    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <br><br>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></form>
+</body>
 </html>
