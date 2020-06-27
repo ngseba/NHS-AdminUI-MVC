@@ -1,27 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>UPDATE ADMIN</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>NHS Search Admin</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
-    <body>
-        <p><strong>UPDATE ADMIN:</strong></p>
-        <br>
 
-        <form method="POST" th:action="@{/admins/update-form-by-id}" th:object="${adminDTO}">
-            <label for="id">ID:</label><br>
-            <input id="id" name="id" placeholder="FIND BY ID" th:field="*{id}" type="id">
+    <!-- Bootstrap core CSS -->
+    <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-center">
+<div class="form-nhs">
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Search Admin form</h1>
+
+    <form class="form-nhs" method="POST" th:action="@{/admins/update-form-by-id}" th:object="${adminDTO}">
+
+
+        <div class="form-label-group">
+            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
+                   placeholder="Admin ID" autofocus>
             <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <input type="submit" value="SEARCH">
-        </form>
-        <br>
-        <br>
+            <label for="id">Admin ID</label>
+        </div>
 
-        <form method="POST" th:action="@{/admins/update-form-by-email}" th:object="${adminDTO}">
-            <label for="email">EMAIL:</label><br>
-            <input id="email" name="email" placeholder="FIND BY EMAIL" th:field="*{email}" type="email">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Search Admin</button>
+    </form>
+
+    <form class="form-nhs" method="POST" th:action="@{/admins/update-form-by-email}" th:object="${adminDTO}">
+
+        <div class="form-label-group">
+            <input id="email" name="email" th:field="*{email}" type="email" class="form-control"
+                   placeholder="Email">
             <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-            <input type="submit" value="SEARCH">
-        </form>
-    </body>
+            <label for="email">Admin Email</label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Search Admin</button>
+    </form>
+
+    <br><br>
+    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <br><br>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></div>
+</body>
 </html>
