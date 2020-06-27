@@ -52,7 +52,7 @@
 
     <div class="form-label-group">
         <input id="firstName" name="firstName" th:field="*{firstName}" type="text" class="form-control"
-               placeholder="First Name" autofocus>
+               placeholder="First Name">
         <span th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></span>
         <label for="firstName">First Name</label>
     </div>
