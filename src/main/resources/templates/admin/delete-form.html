@@ -33,16 +33,17 @@
 
 <div class="form-nhs">
 
+    <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
+    <h1 class="h3 mb-3 font-weight-normal">Delete Admin form</h1>
+
     <form class="form-nhs" method="POST" th:action="@{/admins/delete-by-id}" th:object="${adminDTO}">
 
-        <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
-        <h1 class="h3 mb-3 font-weight-normal">Delete Admin form</h1>
 
         <div class="form-label-group">
             <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
                    placeholder="ID" autofocus>
             <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <label for="email">ID</label>
+            <label for="id">ID</label>
         </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Admin</button>
