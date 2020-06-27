@@ -1,27 +1,43 @@
 package ro.iteahome.nhs.adminui.model.entity;
 
-import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 
 public class Nurse {
+
+    // FIELDS: -------------------------------------------------------------------------------------------------------------
+    @NotNull (message = "ID CANNOT BE EMPTY.")
     private int id;
 
+    @NotNull (message = "CNP CANNOT BE EMPTY.")
     private String cnp;
 
-    private String title;
-
-    private String firstName;
-
-    private String lastName;
-
+    @NotNull(message = "EMAIL CANNOT BE EMPTY.")
+    @Email(regexp = ".+@.+\\.\\w+", message = "INVALID EMAIL ADDRESS")
     private String email;
 
-    private String phoneNoRo;
+    @NotNull (message = "FIRST NAME CANNOT BE EMPTY.")
+    private String firstName;
 
+    @NotNull (message = "LAST NAME CANNOT BE EMPTY.")
+    private String lastName;
+
+    @NotNull (message = "MEDICAL LICENSE CANNOT BE EMPTY.")
     private String licenseNo;
 
+    @NotNull (message = "PHONE NUMBER NAME CANNOT BE EMPTY.")
+    @Pattern(regexp = "^0040\\d{9}$", message = "INVALID PHONE NUMBER")
+    private String phoneNoRo;
+
+    @NotNull(message = "SPECIALTIES CANNOT BE EMPTY.")
     private String specialties;
 
-    private Set<Institution> institutions;
+    @NotNull(message = "TITLE CANNOT BE EMPTY.")
+    private String title;
+
+    // METHODS: ------------------------------------------------------------------------------------------------------------
 
     public Nurse() {
     }
@@ -42,12 +58,12 @@ public class Nurse {
         this.cnp = cnp;
     }
 
-    public String getTitle() {
-        return title;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -66,12 +82,12 @@ public class Nurse {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLicenseNo() {
+        return licenseNo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
     }
 
     public String getPhoneNoRo() {
@@ -82,14 +98,6 @@ public class Nurse {
         this.phoneNoRo = phoneNoRo;
     }
 
-    public String getLicenseNo() {
-        return licenseNo;
-    }
-
-    public void setLicenseNo(String licenseNo) {
-        this.licenseNo = licenseNo;
-    }
-
     public String getSpecialties() {
         return specialties;
     }
@@ -98,11 +106,11 @@ public class Nurse {
         this.specialties = specialties;
     }
 
-    public Set<Institution> getInstitutions() {
-        return institutions;
+    public String getTitle() {
+        return title;
     }
 
-    public void setInstitutions(Set<Institution> institutions) {
-        this.institutions = institutions;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
