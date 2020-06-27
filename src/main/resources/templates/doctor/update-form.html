@@ -47,37 +47,24 @@
     <br>
     <br>
 
-    <label for="specialties">SPECIALTIES:</label><br>
-    <input id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}"
-           type="text">
-    <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>
-    <br>
-    <br>
 
 
-    <label for="title">Title:</label><br>
-    <input id="title" name="title" placeholder="TITLE" th:field="*{title}"
-           type="text">
-    <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
-    <br>
-    <br>
 
+        <label for="specialties">SPECIALTIES:</label><br>
+        <select id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}">
+            <option th:each="specialty : ${doctorSpecialties}" th:value="${specialty}" th:text="${specialty}"></option>
+        </select>
+        <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>
+        <br>
+        <br>
 
-    <!--    <label for="specialties">SPECIALTIES:</label><br>-->
-    <!--    <select id="specialties" name="specialties" placeholder="SPECIALTIES" th:field="*{specialties}">-->
-    <!--        <option th:each="specialty : ${doctorSpecialties}" th:value="${specialty}" th:text="${specialty}"></option>-->
-    <!--    </select>-->
-    <!--    <span th:errors="*{specialties}" th:if="${#fields.hasErrors('specialties')}"></span>-->
-    <!--    <br>-->
-    <!--    <br>-->
-
-    <!--    <label for="title">Title:</label><br>-->
-    <!--    <select id="title" name="title" placeholder="TYPE" th:field="*{title}">-->
-    <!--        <option th:each="doctorTitle : ${doctorTitles}" th:value="${doctorTitle}" th:text="${doctorTitle}"></option>-->
-    <!--    </select>-->
-    <!--    <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>-->
-    <!--    <br>-->
-    <!--    <br>-->
+        <label for="title">Title:</label><br>
+        <select id="title" name="title" placeholder="TYPE" th:field="*{title}">
+            <option th:each="doctorTitle : ${doctorTitles}" th:value="${doctorTitle}" th:text="${doctorTitle}"></option>
+        </select>
+        <span th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
+        <br>
+        <br>
 
     <br>
 
