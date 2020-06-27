@@ -86,9 +86,9 @@ public class NurseService {
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Nurse.class);
-        Nurse nurse = nurseResponse.getBody();
-        if (nurse != null) {
-            return nurse;
+        Nurse nurseDTO = nurseResponse.getBody();
+        if (nurseDTO != null) {
+            return nurseDTO;
         } else {
             throw new GlobalNotFoundException("NURSES");
         }
@@ -101,31 +101,31 @@ public class NurseService {
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Nurse.class);
-        Nurse nurse = nurseResponse.getBody();
-        if (nurse != null) {
-            return nurse;
+        Nurse nurseDTO = nurseResponse.getBody();
+        if (nurseDTO != null) {
+            return nurseDTO;
         } else {
             throw new GlobalNotFoundException("NURSES");
         }
     }
 
     public Nurse update(Nurse newNurse) {
-        Nurse nurse = findById(newNurse.getId());
-        if (nurse != null) {
+        Nurse nurseDTO = findById(newNurse.getId());
+        if (nurseDTO != null) {
             restTemplate.exchange(
                     NURSES_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newNurse, getAuthHeaders()),
                     Nurse.class);
-            return findById(nurse.getId());
+            return findById(nurseDTO.getId());
         } else {
             throw new GlobalNotFoundException("NURSES");
         }
     }
 
     public Nurse deleteById(int id) {
-        Nurse nurse = findById(id);
-        if (nurse != null) {
+        Nurse nurseDTO = findById(id);
+        if (nurseDTO != null) {
             ResponseEntity<Nurse> nurseResponse =
                     restTemplate.exchange(
                             NURSES_URL + "/by-id/" + id,
@@ -139,8 +139,8 @@ public class NurseService {
     }
 
     public Nurse deleteByEmail(String Email) {
-        Nurse nurse = findByEmail(Email);
-        if (nurse != null) {
+        Nurse nurseDTO = findByEmail(Email);
+        if (nurseDTO != null) {
             ResponseEntity<Nurse> nurseResponse =
                     restTemplate.exchange(
                             NURSES_URL + "/by-email/" + Email,

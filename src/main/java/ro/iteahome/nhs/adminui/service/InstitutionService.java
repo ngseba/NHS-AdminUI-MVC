@@ -64,9 +64,9 @@ public class InstitutionService {
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Institution.class);
-        Institution institution = institutionResponse.getBody();
-        if (institution != null) {
-            return institution;
+        Institution institutionDTO = institutionResponse.getBody();
+        if (institutionDTO != null) {
+            return institutionDTO;
         } else {
             throw new GlobalNotFoundException("INSTITUTION");
         }
@@ -79,17 +79,17 @@ public class InstitutionService {
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Institution.class);
-        Institution institution = institutionResponse.getBody();
-        if (institution != null) {
-            return institution;
+        Institution institutionDTO = institutionResponse.getBody();
+        if (institutionDTO != null) {
+            return institutionDTO;
         } else {
             throw new GlobalNotFoundException("INSTITUTION");
         }
     }
 
     public Institution update(Institution newInstitution) {
-        Institution institution = findById(newInstitution.getId());
-        if (institution != null) {
+        Institution institutionDTO = findById(newInstitution.getId());
+        if (institutionDTO != null) {
             restTemplate.exchange(
                     INSTITUTIONS_URL,
                     HttpMethod.PUT,
@@ -102,8 +102,8 @@ public class InstitutionService {
     }
 
     public Institution deleteById(int id) {
-        Institution institution = findById(id);
-        if (institution != null) {
+        Institution institutionDTO = findById(id);
+        if (institutionDTO != null) {
             ResponseEntity<Institution> institutionResponse =
                     restTemplate.exchange(
                             INSTITUTIONS_URL + "/by-id/" + id,
@@ -117,8 +117,8 @@ public class InstitutionService {
     }
 
     public Institution deleteByCui(String Cui) {
-        Institution institution = findByCui(Cui);
-        if (institution != null) {
+        Institution institutionDTO = findByCui(Cui);
+        if (institutionDTO != null) {
             ResponseEntity<Institution> institutionResponse =
                     restTemplate.exchange(
                             INSTITUTIONS_URL + "/by-cui/?cui="+Cui,
