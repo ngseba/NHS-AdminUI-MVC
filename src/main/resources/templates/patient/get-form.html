@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>NHS Get Pacient</title>
+    <title>NHS Get Patient</title>
     <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
 
@@ -32,7 +32,7 @@
 <body class="text-center">
 <div class="form-nhs">
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
-    <h1 class="h3 mb-3 font-weight-normal">Get Pacient form</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Get Patient form</h1>
 
 
     <form class="form-nhs" method="GET" th:action="@{/patients/by-id}" th:object="${patient}">
@@ -58,7 +58,7 @@
             <label for="cnp">CNP</label>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Get Pacient</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Get Patient</button>
     </form>
 
     <br><br>
