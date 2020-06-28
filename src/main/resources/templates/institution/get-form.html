@@ -8,14 +8,6 @@
         <p><strong>GET INSTITUTION:</strong></p>
         <br>
 
-        <form method="GET" th:action="@{/medical-institutions/by-id}" th:object="${institution}">
-            <label for="id">GET BY ID:</label><br>
-            <input id="id" name="id" placeholder="INSTITUTION ID" th:field="*{id}" type="text">
-            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <input type="submit" value="GET INSTITUTION">
-        </form>
-        <br>
-
         <form method="GET" th:action="@{/medical-institutions/by-cui}" th:object="${institution}">
             <label for="cui">GET BY CUI:</label><br>
             <input id="cui" name="email" placeholder="INSTITUTION CUI" th:field="*{cui}" type="text">

@@ -58,20 +58,6 @@ public class InstitutionService {
         return institutionResponse.getBody();
     }
 
-    public Institution findById(int id) {
-        ResponseEntity<Institution> institutionResponse =
-                restTemplate.exchange(
-                        INSTITUTIONS_URL + "/by-id/" + id,
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        Institution.class);
-        Institution institutionDTO = institutionResponse.getBody();
-        if (institutionDTO != null) {
-            return institutionDTO;
-        } else {
-            throw new GlobalNotFoundException("INSTITUTION");
-        }
-    }
 
     public Institution findByCui(String Cui) {
         ResponseEntity<Institution> institutionResponse =
@@ -89,33 +75,19 @@ public class InstitutionService {
     }
 
     public Institution update(Institution newInstitution) {
-        Institution institutionDTO = findById(newInstitution.getId());
+        Institution institutionDTO = findByCui(newInstitution.getCui());
         if (institutionDTO != null) {
             restTemplate.exchange(
                     INSTITUTIONS_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newInstitution, getAuthHeaders()),
                     Institution.class);
-            return findById(newInstitution.getId());
+            return findByCui(newInstitution.getCui());
         } else {
             throw new GlobalNotFoundException("INSTITUTION");
         }
     }
 
-    public Institution deleteById(int id) {
-        Institution institutionDTO = findById(id);
-        if (institutionDTO != null) {
-            ResponseEntity<Institution> institutionResponse =
-                    restTemplate.exchange(
-                            INSTITUTIONS_URL + "/by-id/" + id,
-                            HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
-                            Institution.class);
-            return institutionResponse.getBody();
-        } else {
-            throw new GlobalNotFoundException("INSTITUTION");
-        }
-    }
 
     public Institution deleteByCui(String Cui) {
         Institution institutionDTO = findByCui(Cui);

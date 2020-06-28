@@ -48,20 +48,6 @@ public class PatientService {
     }
 
 
-    public Patient findById(int id) {
-        ResponseEntity<Patient> patientResponse =
-                restTemplate.exchange(
-                        PATIENTS_URL + "/by-id/" + id,
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        Patient.class);
-        Patient patientDTO = patientResponse.getBody();
-        if (patientDTO != null) {
-            return patientDTO;
-        } else {
-            throw new GlobalNotFoundException("PATIENTS");
-        }
-    }
 
     public Patient findByCnp(String Cnp) {
         ResponseEntity<Patient> patientResponse =
@@ -79,33 +65,19 @@ public class PatientService {
     }
 
     public Patient update(Patient newPatient) {
-        Patient patientDTO = findById(newPatient.getId());
+        Patient patientDTO = findByCnp(newPatient.getCnp());
         if (patientDTO != null) {
             restTemplate.exchange(
                     PATIENTS_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newPatient, getAuthHeaders()),
                     Patient.class);
-            return findById(patientDTO.getId());
+            return findByCnp(patientDTO.getCnp());
         } else {
             throw new GlobalNotFoundException("PATIENTS");
         }
     }
 
-    public Patient deleteById(int id) {
-        Patient patientDTO = findById(id);
-        if (patientDTO != null) {
-            ResponseEntity<Patient> patientResponse =
-                    restTemplate.exchange(
-                            PATIENTS_URL + "/by-id/" + id,
-                            HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
-                            Patient.class);
-            return patientResponse.getBody();
-        } else {
-            throw new GlobalNotFoundException("PATIENTS");
-        }
-    }
 
     public Patient deleteByCnp(String Cnp) {
         Patient patientDTO = findByCnp(Cnp);

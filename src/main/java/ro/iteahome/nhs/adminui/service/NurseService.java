@@ -81,20 +81,7 @@ public class NurseService {
         return nurseExists.getBody();
     }
 
-    public Nurse findById(int id) {
-        ResponseEntity<Nurse> nurseResponse =
-                restTemplate.exchange(
-                        NURSES_URL + "/by-id/" + id,
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        Nurse.class);
-        Nurse nurseDTO = nurseResponse.getBody();
-        if (nurseDTO != null) {
-            return nurseDTO;
-        } else {
-            throw new GlobalNotFoundException("NURSES");
-        }
-    }
+
 
     public Nurse findByEmail(String Email) {
         ResponseEntity<Nurse> nurseResponse =
@@ -112,33 +99,19 @@ public class NurseService {
     }
 
     public Nurse update(Nurse newNurse) {
-        Nurse nurseDTO = findById(newNurse.getId());
+        Nurse nurseDTO = findByEmail(newNurse.getEmail());
         if (nurseDTO != null) {
             restTemplate.exchange(
                     NURSES_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newNurse, getAuthHeaders()),
                     Nurse.class);
-            return findById(nurseDTO.getId());
+            return findByEmail(nurseDTO.getEmail());
         } else {
             throw new GlobalNotFoundException("NURSES");
         }
     }
 
-    public Nurse deleteById(int id) {
-        Nurse nurseDTO = findById(id);
-        if (nurseDTO != null) {
-            ResponseEntity<Nurse> nurseResponse =
-                    restTemplate.exchange(
-                            NURSES_URL + "/by-id/" + id,
-                            HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
-                            Nurse.class);
-            return nurseResponse.getBody();
-        } else {
-            throw new GlobalNotFoundException("NURSES");
-        }
-    }
 
     public Nurse deleteByEmail(String Email) {
         Nurse nurseDTO = findByEmail(Email);

@@ -57,11 +57,6 @@ public class PatientController {
         return new ModelAndView("patient/home-patient").addObject(databasePatient);
     }
 
-    @GetMapping("/by-id")
-    public ModelAndView getById(Patient patient) {
-        Patient databasePatient = patientService.findById(patient.getId());
-        return new ModelAndView("patient/home-patient").addObject(databasePatient);
-    }
 
     @GetMapping("/by-email")
     public ModelAndView getByCnp( Patient patient) {
@@ -69,11 +64,6 @@ public class PatientController {
         return new ModelAndView("patient/home-patient").addObject(databasePatient);
     }
 
-    @GetMapping("/update-form-by-id")
-    public ModelAndView showUpdateFormById(Patient patient) {
-        Patient databasePatient = patientService.findById(patient.getId());
-        return new ModelAndView("patient/update-form").addObject(databasePatient);
-    }
 
     @GetMapping("/update-form-by-cnp")
     public ModelAndView showUpdateFormByCnp(Patient patient) {
@@ -87,12 +77,6 @@ public class PatientController {
         return new ModelAndView("patient/home-patient").addObject(databasePatient);
     }
 
-    @PostMapping("/delete-by-id")
-    public ModelAndView deleteById(Patient patient) {
-        Patient databasePatient = patientService.findById(patient.getId());
-        patientService.deleteById(databasePatient.getId());
-        return new ModelAndView("patient/home-patient").addObject(databasePatient);
-    }
 
     @PostMapping("/delete-by-cnp")
     public ModelAndView deleteByCnp(Patient patient) {

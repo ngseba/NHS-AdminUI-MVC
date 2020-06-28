@@ -59,26 +59,12 @@ public class NurseController {
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 
-    @GetMapping("/by-id")
-    public ModelAndView getById( Nurse nurse) {
-        Nurse databaseNurse = nurseService.findById(nurse.getId());
-        return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
-    }
-
     @GetMapping("/by-email")
     public ModelAndView getByEmail( Nurse nurse) {
         Nurse databaseNurse = nurseService.findByEmail(nurse.getEmail());
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 
-    @GetMapping("/update-form-by-id")
-    public ModelAndView showUpdateFormById(Nurse nurse) {
-        ArrayList specialties = (ArrayList) nurseService.getSpecialties();
-        ArrayList titles = (ArrayList) nurseService.getTitles();
-        Nurse databaseNurse = nurseService.findById(nurse.getId());
-        return new ModelAndView("nurse/update-form").addObject(databaseNurse)
-         .addObject("nurseSpecialties",specialties).addObject("nurseTitles",titles);
-    }
 
     @GetMapping("/update-form-by-email")
     public ModelAndView showUpdateFormByEmail(Nurse nurse) {
@@ -92,13 +78,6 @@ public class NurseController {
     @PostMapping("/updated-nurse")
     public ModelAndView update(@Valid Nurse nurse) {
         Nurse databaseNurse = nurseService.update(nurse);
-        return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
-    }
-
-    @PostMapping("/delete-by-id")
-    public ModelAndView deleteById(Nurse nurse) {
-        Nurse databaseNurse = nurseService.findById(nurse.getId());
-        nurseService.deleteById(databaseNurse.getId());
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 

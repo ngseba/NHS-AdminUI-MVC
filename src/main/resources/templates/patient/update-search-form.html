@@ -33,20 +33,6 @@
 <div class="form-nhs">
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Search Patient form</h1>
-
-    <form class="form-nhs" method="GET" th:action="@{/patients/update-form-by-id}" th:object="${patient}">
-
-
-        <div class="form-label-group">
-            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
-                   placeholder="ID" autofocus>
-            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <label for="id">ID</label>
-        </div>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Search Patient</button>
-    </form>
-
     <form class="form-nhs" method="GET" th:action="@{/patients/update-form-by-cnp}" th:object="${patient}">
 
         <div class="form-label-group">
