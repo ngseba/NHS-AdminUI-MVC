@@ -52,7 +52,7 @@
 
 
         <div class="form-label-group">
-            <input id="name" name="id" th:field="*{name}" type="name" class="form-control"
+            <input id="name" name="name" th:field="*{name}" type="name" class="form-control"
                    placeholder="Role name">
             <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
             <label for="id">Role name</label>

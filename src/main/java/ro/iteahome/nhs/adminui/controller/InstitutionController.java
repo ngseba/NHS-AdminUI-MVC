@@ -30,8 +30,8 @@ public class InstitutionController {
 
     @GetMapping("/add-form")
     public ModelAndView showAddForm(Institution institution) {
-        ArrayList types = (ArrayList) institutionService.getInstitutionType();
-        return new ModelAndView("institution/add-form").addObject("types",types);
+        String[] institutionTypes =  institutionService.getInstitutionType();
+        return new ModelAndView("institution/add-form").addObject("types",institutionTypes);
     }
 
     @GetMapping("/get-form")
@@ -67,9 +67,10 @@ public class InstitutionController {
 
     @GetMapping("/update-form-by-cui")
     public ModelAndView showUpdateFormByCui(Institution institution) {
-        ArrayList types = (ArrayList) institutionService.getInstitutionType();
+        String[] institutionTypes = institutionService.getInstitutionType();
         Institution databaseInstitution = institutionService.findByCui(institution.getCui());
-        return new ModelAndView("institution/update-form").addObject(databaseInstitution).addObject("types",types);
+        return new ModelAndView("institution/update-form")
+                .addObject(databaseInstitution).addObject("types",institutionTypes);
     }
 
     @PostMapping("/updated-institution")
@@ -83,7 +84,6 @@ public class InstitutionController {
     public ModelAndView deleteByCui(Institution institution) {
         Institution databaseInstitution = institutionService.findByCui(institution.getCui());
         institutionService.deleteByCui(institution.getCui());
-
         return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
