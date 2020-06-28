@@ -48,24 +48,24 @@ public class NurseService {
     }
 
 
-    public Object getSpecialties(){
-        ResponseEntity<Object> nurseResponse =
+    public String[] getSpecialties(){
+        ResponseEntity<String[]> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/retrieve-nurse-specialty",
+                        NURSES_URL + "/specialty",
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Object.class);
+                        String[].class);
 
         return nurseResponse.getBody();
     }
 
-    public Object getTitles(){
-        ResponseEntity<Object> nurseResponse =
+    public String[] getTitles(){
+        ResponseEntity<String[]> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/retrieve-nurse-title",
+                        NURSES_URL + "/title",
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Object.class);
+                        String[].class);
 
         return nurseResponse.getBody();
     }
@@ -74,7 +74,7 @@ public class NurseService {
     public boolean existsByCnp(String cnp,String licenseNo) {
         ResponseEntity<Boolean> nurseExists =
                 restTemplate.exchange(
-                        NURSES_URL + "/existence/by-cnp?cnp="+cnp,
+                        NURSES_URL + "/existence/by-cnp/" + cnp,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Boolean.class);
@@ -85,7 +85,7 @@ public class NurseService {
     public Nurse findByCnp(String Cnp) {
         ResponseEntity<Nurse> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/find-by-cnp/?cnp=" + Cnp,
+                        NURSES_URL + "/by-cnp/" + Cnp,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Nurse.class);
@@ -116,7 +116,7 @@ public class NurseService {
         if (nurseDTO != null) {
             ResponseEntity<Nurse> nurseResponse =
                     restTemplate.exchange(
-                            NURSES_URL + "/delete/by-cnp/?cnp=" + Cnp,
+                            NURSES_URL + "/by-cnp/" + Cnp,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Nurse.class);

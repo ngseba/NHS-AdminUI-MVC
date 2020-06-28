@@ -29,10 +29,11 @@ public class DoctorController {
 
     @GetMapping("/add-form")
     public ModelAndView showAddForm(Doctor doctor) {
-        ArrayList<String> specialties = (ArrayList<String>) doctorService.getSpecialties();
-        ArrayList<String> titles = (ArrayList<String>) doctorService.getTitles();
+        String[] doctorSpecialties = doctorService.getSpecialties();
+        String[] doctorTitles =  doctorService.getTitles();
         return new ModelAndView("doctor/add-form")
-        .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
+        .addObject("doctorSpecialties",doctorSpecialties)
+                .addObject("doctorTitles",doctorTitles);
     }
 
     @GetMapping("/get-form")
@@ -66,11 +67,12 @@ public class DoctorController {
 
     @GetMapping("/update-form-by-cnp")
     public ModelAndView showUpdateFormByCnp(Doctor doctor) {
-        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
-        ArrayList titles = (ArrayList) doctorService.getTitles();
+        String[] doctorSpecialties = doctorService.getSpecialties();
+        String[] doctorTitles = doctorService.getTitles();
         Doctor databaseDoctor = doctorService.findByCnp(doctor.getCnp());
         return new ModelAndView("doctor/update-form").addObject(databaseDoctor)
-                .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
+                .addObject("doctorSpecialties",doctorSpecialties)
+                .addObject("doctorTitles",doctorTitles);
     }
 
     @PostMapping("/updated-doctor")

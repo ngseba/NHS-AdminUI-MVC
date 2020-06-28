@@ -38,8 +38,6 @@ public class DoctorService {
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     public Doctor add(Doctor doctor) {
-        System.out.println("DOCTOR");
-        System.out.println(doctor);
         ResponseEntity<Doctor> doctorResponse =
                 restTemplate.exchange(
                         DOCTORS_URL,
@@ -49,24 +47,24 @@ public class DoctorService {
         return doctorResponse.getBody();
     }
 
-    public Object getSpecialties(){
-        ResponseEntity<Object> doctorResponse =
+    public String[] getSpecialties(){
+        ResponseEntity<String[]> doctorResponse =
                 restTemplate.exchange(
-                        DOCTORS_URL + "/retrieve-doctor-specialty",
+                        DOCTORS_URL + "/specialty",
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Object.class);
+                        String[].class);
 
         return doctorResponse.getBody();
     }
 
-    public Object getTitles(){
-        ResponseEntity<Object> doctorResponse =
+    public String[] getTitles(){
+        ResponseEntity<String[]> doctorResponse =
                 restTemplate.exchange(
-                        DOCTORS_URL + "/retrieve-doctor-title",
+                        DOCTORS_URL + "/title",
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Object.class);
+                        String[].class);
 
         return doctorResponse.getBody();
     }
@@ -75,7 +73,7 @@ public class DoctorService {
     public boolean existsByCnp(String cnp) {
         ResponseEntity<Boolean> doctorExists =
                 restTemplate.exchange(
-                DOCTORS_URL + "/existence/by-cnp/?cnp="+cnp,
+                DOCTORS_URL + "/existence/by-cnp/" + cnp,
                 HttpMethod.GET,
                 new HttpEntity<>(getAuthHeaders()),
                 Boolean.class);
@@ -113,13 +111,12 @@ public class DoctorService {
     }
 
 
-
     public Doctor deleteByCnp(String Cnp) {
         Doctor doctorDTO = findByCnp(Cnp);
         if (doctorDTO != null) {
             ResponseEntity<Doctor> doctorResponse =
                     restTemplate.exchange(
-                            DOCTORS_URL + "/delete/by-cnp/?cnp=" + Cnp,
+                            DOCTORS_URL + "/by-cnp/" + Cnp,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Doctor.class);
