@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ro.iteahome.nhs.adminui.config.RestUrlConfig;
 import ro.iteahome.nhs.adminui.exception.business.GlobalAlreadyExistsException;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.dto.AdminCreationDTO;
@@ -30,7 +31,7 @@ public class AdminService implements UserDetailsService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String ADMINS_URL = "https://nhsbackendstage.myserverapps.com/admins";
+    private final String ADMINS_URL = "http://" + RestUrlConfig.SERVER_ROOT_URL + "/admins";
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
 
