@@ -57,11 +57,6 @@ public class InstitutionController {
         return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
-    @GetMapping("/by-id")
-    public ModelAndView getById( Institution institution) {
-        Institution databaseInstitution = institutionService.findById(institution.getId());
-        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
-    }
 
     @GetMapping("/by-cui")
     public ModelAndView getByCui( Institution institution) {
@@ -69,12 +64,6 @@ public class InstitutionController {
         return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
-    @GetMapping("/update-form-by-id")
-    public ModelAndView showUpdateFormById(Institution institution) {
-        ArrayList types = (ArrayList) institutionService.getInstitutionType();
-        Institution databaseInstitution = institutionService.findById(institution.getId());
-        return new ModelAndView("institution/update-form").addObject(databaseInstitution).addObject("types",types);
-    }
 
     @GetMapping("/update-form-by-cui")
     public ModelAndView showUpdateFormByCui(Institution institution) {
@@ -89,12 +78,6 @@ public class InstitutionController {
         return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
     }
 
-    @PostMapping("/delete-by-id")
-    public ModelAndView deleteById(Institution institution) {
-        Institution databaseInstitution = institutionService.findById(institution.getId());
-        institutionService.deleteById(institution.getId());
-        return new ModelAndView("institution/home-institution").addObject(databaseInstitution);
-    }
 
     @PostMapping("/delete-by-cui")
     public ModelAndView deleteByCui(Institution institution) {

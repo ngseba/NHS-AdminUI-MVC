@@ -38,6 +38,8 @@ public class DoctorService {
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     public Doctor add(Doctor doctor) {
+        System.out.println("DOCTOR");
+        System.out.println(doctor);
         ResponseEntity<Doctor> doctorResponse =
                 restTemplate.exchange(
                         DOCTORS_URL,
@@ -80,20 +82,6 @@ public class DoctorService {
         return doctorExists.getBody();
     }
 
-    public Doctor findById(int id) {
-        ResponseEntity<Doctor> doctorResponse =
-                restTemplate.exchange(
-                        DOCTORS_URL + "/by-id/" + id,
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        Doctor.class);
-        Doctor doctorDTO = doctorResponse.getBody();
-        if (doctorDTO != null) {
-            return doctorDTO;
-        } else {
-            throw new GlobalNotFoundException("DOCTORS");
-        }
-    }
 
     public Doctor findByEmail(String Email) {
         ResponseEntity<Doctor> doctorResponse =
@@ -111,33 +99,19 @@ public class DoctorService {
     }
 
     public Doctor update(Doctor newDoctor) {
-        Doctor doctorDTO = findById(newDoctor.getId());
+        Doctor doctorDTO = findByEmail(newDoctor.getEmail());
         if (doctorDTO != null) {
             restTemplate.exchange(
                     DOCTORS_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newDoctor, getAuthHeaders()),
                     Doctor.class);
-            return findById(doctorDTO.getId());
+            return findByEmail(doctorDTO.getEmail());
         } else {
             throw new GlobalNotFoundException("DOCTOR");
         }
     }
 
-    public Doctor deleteById(int id) {
-        Doctor doctorDTO = findById(id);
-        if (doctorDTO != null) {
-            ResponseEntity<Doctor> doctorResponse =
-                    restTemplate.exchange(
-                            DOCTORS_URL + "/by-id/" + id,
-                            HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
-                            Doctor.class);
-            return doctorResponse.getBody();
-        } else {
-            throw new GlobalNotFoundException("DOCTOR");
-        }
-    }
 
     public Doctor deleteByEmail(String Email) {
         Doctor doctorDTO = findByEmail(Email);
