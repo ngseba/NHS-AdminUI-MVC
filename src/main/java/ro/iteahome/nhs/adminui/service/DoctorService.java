@@ -25,6 +25,8 @@ public class DoctorService {
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
     private final String DOCTORS_URL = "https://nhsbackendstage.myserverapps.com/doctors";
+    //private final String DOCTORS_URL = "http://localhost:8081/doctors";
+
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
 
@@ -86,9 +88,9 @@ public class DoctorService {
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Doctor.class);
-        Doctor doctor = doctorResponse.getBody();
-        if (doctor != null) {
-            return doctor;
+        Doctor doctorDTO = doctorResponse.getBody();
+        if (doctorDTO != null) {
+            return doctorDTO;
         } else {
             throw new GlobalNotFoundException("DOCTORS");
         }
@@ -101,31 +103,31 @@ public class DoctorService {
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Doctor.class);
-        Doctor doctor = doctorResponse.getBody();
-        if (doctor != null) {
-            return doctor;
+        Doctor doctorDTO = doctorResponse.getBody();
+        if (doctorDTO != null) {
+            return doctorDTO;
         } else {
             throw new GlobalNotFoundException("DOCTORS");
         }
     }
 
     public Doctor update(Doctor newDoctor) {
-        Doctor doctor = findById(newDoctor.getId());
-        if (doctor != null) {
+        Doctor doctorDTO = findById(newDoctor.getId());
+        if (doctorDTO != null) {
             restTemplate.exchange(
                     DOCTORS_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newDoctor, getAuthHeaders()),
                     Doctor.class);
-            return findById(doctor.getId());
+            return findById(doctorDTO.getId());
         } else {
             throw new GlobalNotFoundException("DOCTOR");
         }
     }
 
     public Doctor deleteById(int id) {
-        Doctor doctor = findById(id);
-        if (doctor != null) {
+        Doctor doctorDTO = findById(id);
+        if (doctorDTO != null) {
             ResponseEntity<Doctor> doctorResponse =
                     restTemplate.exchange(
                             DOCTORS_URL + "/by-id/" + id,
@@ -139,8 +141,8 @@ public class DoctorService {
     }
 
     public Doctor deleteByEmail(String Email) {
-        Doctor doctor = findByEmail(Email);
-        if (doctor != null) {
+        Doctor doctorDTO = findByEmail(Email);
+        if (doctorDTO != null) {
             ResponseEntity<Doctor> doctorResponse =
                     restTemplate.exchange(
                             DOCTORS_URL + "/by-email/" + Email,
