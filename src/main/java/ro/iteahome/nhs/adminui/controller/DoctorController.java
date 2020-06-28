@@ -66,6 +66,12 @@ public class DoctorController {
     }
 
 
+    @GetMapping("/by-cnp")
+    public ModelAndView getByCnp( Doctor doctor) {
+        Doctor databaseDoctor = doctorService.findByCnp(doctor.getCnp());
+        return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
+    }
+
     @GetMapping("/update-form-by-email")
     public ModelAndView showUpdateFormByEmail(Doctor doctor) {
         ArrayList specialties = (ArrayList) doctorService.getSpecialties();
@@ -73,6 +79,15 @@ public class DoctorController {
         Doctor databaseDoctor = doctorService.findByEmail(doctor.getEmail());
         return new ModelAndView("doctor/update-form").addObject(databaseDoctor)
         .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
+    }
+
+    @GetMapping("/update-form-by-cnp")
+    public ModelAndView showUpdateFormByCnp(Doctor doctor) {
+        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
+        ArrayList titles = (ArrayList) doctorService.getTitles();
+        Doctor databaseDoctor = doctorService.findByCnp(doctor.getCnp());
+        return new ModelAndView("doctor/update-form").addObject(databaseDoctor)
+                .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
     }
 
     @PostMapping("/updated-doctor")
@@ -86,6 +101,14 @@ public class DoctorController {
     public ModelAndView deleteByEmail(Doctor doctor) {
         Doctor databaseDoctor = doctorService.findByEmail(doctor.getEmail());
         doctorService.deleteByEmail(databaseDoctor.getEmail());
+
+        return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
+    }
+
+    @PostMapping("/delete-by-cnp")
+    public ModelAndView deleteByCnp(Doctor doctor) {
+        Doctor databaseDoctor = doctorService.findByCnp(doctor.getCnp());
+        doctorService.deleteByCnp(databaseDoctor.getCnp());
 
         return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
     }

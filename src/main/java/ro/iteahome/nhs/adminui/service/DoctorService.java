@@ -72,10 +72,10 @@ public class DoctorService {
     }
 
 
-    public boolean existsByCnpAndLicenseNo(String cnp,String licenseNo) {
+    public boolean existsByCnp(String cnp) {
         ResponseEntity<Boolean> doctorExists =
                 restTemplate.exchange(
-                DOCTORS_URL + "/existence/by-cnp-and-license-number/?cnp="+cnp+"&licenseNo="+licenseNo,
+                DOCTORS_URL + "/existence/by-cnp/?cnp="+cnp,
                 HttpMethod.GET,
                 new HttpEntity<>(getAuthHeaders()),
                 Boolean.class);
@@ -98,15 +98,30 @@ public class DoctorService {
         }
     }
 
+    public Doctor findByCnp(String Cnp) {
+        ResponseEntity<Doctor> doctorResponse =
+                restTemplate.exchange(
+                        DOCTORS_URL + "/by-cnp/" + Cnp,
+                        HttpMethod.GET,
+                        new HttpEntity<>(getAuthHeaders()),
+                        Doctor.class);
+        Doctor doctorDTO = doctorResponse.getBody();
+        if (doctorDTO != null) {
+            return doctorDTO;
+        } else {
+            throw new GlobalNotFoundException("DOCTORS");
+        }
+    }
+
     public Doctor update(Doctor newDoctor) {
-        Doctor doctorDTO = findByEmail(newDoctor.getEmail());
+        Doctor doctorDTO = findByCnp(newDoctor.getCnp());
         if (doctorDTO != null) {
             restTemplate.exchange(
                     DOCTORS_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newDoctor, getAuthHeaders()),
                     Doctor.class);
-            return findByEmail(doctorDTO.getEmail());
+            return findByCnp(doctorDTO.getCnp());
         } else {
             throw new GlobalNotFoundException("DOCTOR");
         }
@@ -118,7 +133,22 @@ public class DoctorService {
         if (doctorDTO != null) {
             ResponseEntity<Doctor> doctorResponse =
                     restTemplate.exchange(
-                            DOCTORS_URL + "/by-email/" + Email,
+                            DOCTORS_URL + "/delete/by-email/" + Email,
+                            HttpMethod.DELETE,
+                            new HttpEntity<>(getAuthHeaders()),
+                            Doctor.class);
+            return doctorResponse.getBody();
+        } else {
+            throw new GlobalNotFoundException("DOCTOR");
+        }
+    }
+
+    public Doctor deleteByCnp(String Cnp) {
+        Doctor doctorDTO = findByCnp(Cnp);
+        if (doctorDTO != null) {
+            ResponseEntity<Doctor> doctorResponse =
+                    restTemplate.exchange(
+                            DOCTORS_URL + "/delete/by-cnp/?cnp=" + Cnp,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Doctor.class);
