@@ -33,6 +33,8 @@
 
 
 <form class="form-nhs" method="POST" th:action="@{/medical-institutions/updated-institution}" th:object="${institution}">
+    <input id="id" name="id" th:field="*{id}" type="hidden">
+    <input id="cui" name="cui" th:field="*{cui}" type="hidden">
 
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Update Institution form</h1>
@@ -72,13 +74,6 @@
                placeholder="Address">
         <span th:errors="*{address}" th:if="${#fields.hasErrors('address')}"></span>
         <label for="address">Address</label>
-    </div>
-
-    <div class="form-label-group">
-        <input id="cui" name="cnp" th:field="*{cui}" type="text" class="form-control"
-               placeholder="CUI">
-        <span th:errors="*{cui}" th:if="${#fields.hasErrors('cui')}"></span>
-        <label for="cui">CUI</label>
     </div>
 
     <div class="form-label-group">
