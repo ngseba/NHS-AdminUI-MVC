@@ -35,6 +35,19 @@
     <h1 class="h3 mb-3 font-weight-normal">Get Nurse form</h1>
 
 
+    <form class="form-nhs" method="GET" th:action="@{/nurses/by-id}" th:object="${nurse}">
+
+
+        <div class="form-label-group">
+            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
+                   placeholder="ID" autofocus>
+            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
+            <label for="id">ID</label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Get Nurse</button>
+    </form>
+
     <form class="form-nhs" method="GET" th:action="@{/nurses/by-email}" th:object="${nurse}">
 
 
