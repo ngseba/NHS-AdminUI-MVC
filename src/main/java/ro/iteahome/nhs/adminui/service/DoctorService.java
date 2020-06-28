@@ -83,21 +83,6 @@ public class DoctorService {
     }
 
 
-    public Doctor findByEmail(String Email) {
-        ResponseEntity<Doctor> doctorResponse =
-                restTemplate.exchange(
-                        DOCTORS_URL + "/by-email/" + Email,
-                        HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        Doctor.class);
-        Doctor doctorDTO = doctorResponse.getBody();
-        if (doctorDTO != null) {
-            return doctorDTO;
-        } else {
-            throw new GlobalNotFoundException("DOCTORS");
-        }
-    }
-
     public Doctor findByCnp(String Cnp) {
         ResponseEntity<Doctor> doctorResponse =
                 restTemplate.exchange(
@@ -128,20 +113,6 @@ public class DoctorService {
     }
 
 
-    public Doctor deleteByEmail(String Email) {
-        Doctor doctorDTO = findByEmail(Email);
-        if (doctorDTO != null) {
-            ResponseEntity<Doctor> doctorResponse =
-                    restTemplate.exchange(
-                            DOCTORS_URL + "/delete/by-email/" + Email,
-                            HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
-                            Doctor.class);
-            return doctorResponse.getBody();
-        } else {
-            throw new GlobalNotFoundException("DOCTOR");
-        }
-    }
 
     public Doctor deleteByCnp(String Cnp) {
         Doctor doctorDTO = findByCnp(Cnp);

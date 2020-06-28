@@ -34,26 +34,13 @@
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Search Nurse form</h1>
 
-    <form class="form-nhs" method="GET" th:action="@{/nurses/update-form-by-id}" th:object="${nurse}">
-
-
-        <div class="form-label-group">
-            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
-                   placeholder="ID" autofocus>
-            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <label for="id">ID</label>
-        </div>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Search Nurse</button>
-    </form>
-
-    <form class="form-nhs" method="GET" th:action="@{/nurses/update-form-by-email}" th:object="${nurse}">
+    <form class="form-nhs" method="GET" th:action="@{/nurses/update-form-by-cnp}" th:object="${nurse}">
 
         <div class="form-label-group">
-            <input id="email" name="email" th:field="*{email}" type="email" class="form-control"
-                   placeholder="Email">
-            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-            <label for="email">Email</label>
+            <input id="cnp" name="cnp" th:field="*{cnp}" type="text" class="form-control"
+                   placeholder="CNP">
+            <span th:errors="*{cnp}" th:if="${#fields.hasErrors('cnp')}"></span>
+            <label for="cnp">CNP</label>
         </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Search Nurse</button>

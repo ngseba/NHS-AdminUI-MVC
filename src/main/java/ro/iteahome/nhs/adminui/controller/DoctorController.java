@@ -58,27 +58,10 @@ public class DoctorController {
         return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
     }
 
-
-    @GetMapping("/by-email")
-    public ModelAndView getByEmail( Doctor doctor) {
-        Doctor databaseDoctor = doctorService.findByEmail(doctor.getEmail());
-        return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
-    }
-
-
     @GetMapping("/by-cnp")
     public ModelAndView getByCnp( Doctor doctor) {
         Doctor databaseDoctor = doctorService.findByCnp(doctor.getCnp());
         return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
-    }
-
-    @GetMapping("/update-form-by-email")
-    public ModelAndView showUpdateFormByEmail(Doctor doctor) {
-        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
-        ArrayList titles = (ArrayList) doctorService.getTitles();
-        Doctor databaseDoctor = doctorService.findByEmail(doctor.getEmail());
-        return new ModelAndView("doctor/update-form").addObject(databaseDoctor)
-        .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
     }
 
     @GetMapping("/update-form-by-cnp")
@@ -93,15 +76,6 @@ public class DoctorController {
     @PostMapping("/updated-doctor")
     public ModelAndView update(@Valid Doctor doctor) {
         Doctor databaseDoctor = doctorService.update(doctor);
-        return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
-    }
-
-
-    @PostMapping("/delete-by-email")
-    public ModelAndView deleteByEmail(Doctor doctor) {
-        Doctor databaseDoctor = doctorService.findByEmail(doctor.getEmail());
-        doctorService.deleteByEmail(databaseDoctor.getEmail());
-
         return new ModelAndView("doctor/home-doctor").addObject(databaseDoctor);
     }
 

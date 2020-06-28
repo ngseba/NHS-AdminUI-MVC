@@ -49,17 +49,6 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Doctor</button>
     </form>
 
-    <form class="form-nhs" method="POST" th:action="@{/doctors/delete-by-email}" th:object="${doctor}">
-
-        <div class="form-label-group">
-            <input id="email" name="email" th:field="*{email}" type="email" class="form-control"
-                   placeholder="Email">
-            <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
-            <label for="email">Email</label>
-        </div>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Doctor</button>
-    </form>
     <br><br>
     <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
     <br><br>

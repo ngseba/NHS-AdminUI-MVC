@@ -71,10 +71,10 @@ public class NurseService {
     }
 
 
-    public boolean existsByCnpAndLicenseNo(String cnp,String licenseNo) {
+    public boolean existsByCnp(String cnp,String licenseNo) {
         ResponseEntity<Boolean> nurseExists =
                 restTemplate.exchange(
-                        NURSES_URL + "/existence/by-cnp-and-license-number?cnp="+cnp+"&licenseNo="+licenseNo,
+                        NURSES_URL + "/existence/by-cnp?cnp="+cnp,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Boolean.class);
@@ -82,11 +82,10 @@ public class NurseService {
     }
 
 
-
-    public Nurse findByEmail(String Email) {
+    public Nurse findByCnp(String Cnp) {
         ResponseEntity<Nurse> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/by-email/" + Email,
+                        NURSES_URL + "/find-by-cnp/?cnp=" + Cnp,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Nurse.class);
@@ -99,26 +98,25 @@ public class NurseService {
     }
 
     public Nurse update(Nurse newNurse) {
-        Nurse nurseDTO = findByEmail(newNurse.getEmail());
+        Nurse nurseDTO = findByCnp(newNurse.getCnp());
         if (nurseDTO != null) {
             restTemplate.exchange(
                     NURSES_URL,
                     HttpMethod.PUT,
                     new HttpEntity<>(newNurse, getAuthHeaders()),
                     Nurse.class);
-            return findByEmail(nurseDTO.getEmail());
+            return findByCnp(nurseDTO.getCnp());
         } else {
             throw new GlobalNotFoundException("NURSES");
         }
     }
 
-
-    public Nurse deleteByEmail(String Email) {
-        Nurse nurseDTO = findByEmail(Email);
+    public Nurse deleteByCnp(String Cnp) {
+        Nurse nurseDTO = findByCnp(Cnp);
         if (nurseDTO != null) {
             ResponseEntity<Nurse> nurseResponse =
                     restTemplate.exchange(
-                            NURSES_URL + "/by-email/" + Email,
+                            NURSES_URL + "/delete/by-cnp/?cnp=" + Cnp,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Nurse.class);

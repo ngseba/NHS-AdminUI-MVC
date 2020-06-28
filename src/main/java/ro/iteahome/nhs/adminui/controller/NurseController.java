@@ -59,18 +59,18 @@ public class NurseController {
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 
-    @GetMapping("/by-email")
-    public ModelAndView getByEmail( Nurse nurse) {
-        Nurse databaseNurse = nurseService.findByEmail(nurse.getEmail());
+    @GetMapping("/by-cnp")
+    public ModelAndView getByCnp( Nurse nurse) {
+        Nurse databaseNurse = nurseService.findByCnp(nurse.getCnp());
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 
 
-    @GetMapping("/update-form-by-email")
-    public ModelAndView showUpdateFormByEmail(Nurse nurse) {
+    @GetMapping("/update-form-by-cnp")
+    public ModelAndView showUpdateFormByCnp(Nurse nurse) {
         ArrayList specialties = (ArrayList) nurseService.getSpecialties();
         ArrayList titles = (ArrayList) nurseService.getTitles();
-        Nurse databaseNurse = nurseService.findByEmail(nurse.getEmail());
+        Nurse databaseNurse = nurseService.findByCnp(nurse.getCnp());
         return new ModelAndView("nurse/update-form").addObject(databaseNurse)
         .addObject("nurseSpecialties",specialties).addObject("nurseTitles",titles);
     }
@@ -81,10 +81,10 @@ public class NurseController {
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 
-    @PostMapping("/delete-by-email")
-    public ModelAndView deleteByEmail(Nurse nurse) {
-        Nurse databaseNurse = nurseService.findByEmail(nurse.getEmail());
-        nurseService.deleteByEmail(databaseNurse.getEmail());
+    @PostMapping("/delete-by-cnp")
+    public ModelAndView deleteByCnp(Nurse nurse) {
+        Nurse databaseNurse = nurseService.findByCnp(nurse.getCnp());
+        nurseService.deleteByCnp(databaseNurse.getCnp());
         return new ModelAndView("nurse/home-nurse").addObject(databaseNurse);
     }
 
