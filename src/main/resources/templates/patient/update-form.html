@@ -32,9 +32,11 @@
 <body class="text-center">
 
 
-<form class="form-nhs" method="POST" th:action="@{/patients}" th:object="${patient}">
+<form class="form-nhs" method="POST" th:action="@{/patients/updated-patient}" th:object="${patient}">
 
     <input id="id" name="id" th:field="*{id}" type="hidden">
+    <input id="cnp" name="cnp" th:field="*{cnp}" type="hidden">
+
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Update Patient form</h1>
 
@@ -59,14 +61,6 @@
         <span th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></span>
         <label for="lastName">Last Name</label>
     </div>
-
-    <div class="form-label-group">
-        <input id="cnp" name="cnp" th:field="*{cnp}" type="text" class="form-control"
-               placeholder="CNP">
-        <span th:errors="*{cnp}" th:if="${#fields.hasErrors('cnp')}"></span>
-        <label for="cnp">CNP</label>
-    </div>
-
 
     <div class="form-label-group">
         <input id="phoneNoRo" name="phoneNoRo" th:field="*{phoneNoRo}" type="text" class="form-control"

@@ -58,7 +58,7 @@ public class PatientController {
     }
 
 
-    @GetMapping("/by-email")
+    @GetMapping("/by-cnp")
     public ModelAndView getByCnp( Patient patient) {
         Patient databasePatient = patientService.findByCnp(patient.getCnp());
         return new ModelAndView("patient/home-patient").addObject(databasePatient);
@@ -80,7 +80,7 @@ public class PatientController {
 
     @PostMapping("/delete-by-cnp")
     public ModelAndView deleteByCnp(Patient patient) {
-        Patient databasePatient = patientService.findByCnp(patient.getEmail());
+        Patient databasePatient = patientService.findByCnp(patient.getCnp());
         patientService.deleteByCnp(databasePatient.getCnp());
         return new ModelAndView("patient/home-patient").addObject(databasePatient);
     }
