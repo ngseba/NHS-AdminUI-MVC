@@ -1,5 +1,6 @@
 package ro.iteahome.nhs.adminui.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ro.iteahome.nhs.adminui.config.RestUrlConfig;
@@ -18,6 +20,7 @@ import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
 
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 public class AdminService implements UserDetailsService {
@@ -26,6 +29,12 @@ public class AdminService implements UserDetailsService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 // FIELDS: -------------------------------------------------------------------------------------------------------------
 
@@ -44,11 +53,12 @@ public class AdminService implements UserDetailsService {
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     public AdminDTO add(AdminCreationDTO adminCreationDTO) {
+        Admin admin = buildAdmin(adminCreationDTO);
         ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
                         ADMINS_URL,
                         HttpMethod.POST,
-                        new HttpEntity<>(adminCreationDTO, getAuthHeaders()),
+                        new HttpEntity<>(admin, getAuthHeaders()),
                         AdminDTO.class);
         AdminDTO adminDTO = responseAdminDTO.getBody();
         if (adminDTO != null) {
@@ -165,17 +175,23 @@ public class AdminService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        ResponseEntity<UserDetails> responseAdmin =
+        ResponseEntity<Admin> responseAdmin =
                 restTemplate.exchange(
                         ADMINS_URL + "/sensitive/by-email/" + email,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        UserDetails.class);
-        UserDetails admin = responseAdmin.getBody();
-        if (admin != null) {
-            return admin;
-        } else {
-            throw new UsernameNotFoundException(email);
-        }
+                        Admin.class);
+        Optional<Admin> optionalAdmin = Optional.ofNullable(responseAdmin.getBody());
+        return optionalAdmin.orElseThrow(() -> new UsernameNotFoundException(email));
+    }
+
+// OTHER METHODS: ------------------------------------------------------------------------------------------------------
+
+    private Admin buildAdmin(AdminCreationDTO adminCreationDTO) {
+        Admin admin = modelMapper.map(adminCreationDTO, Admin.class);
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setStatus(1);
+        admin.setRole("ADMIN");
+        return admin;
     }
 }

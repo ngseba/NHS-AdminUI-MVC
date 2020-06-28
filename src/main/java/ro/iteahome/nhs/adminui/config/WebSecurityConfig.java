@@ -39,18 +39,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("...PUBLIC ENDPOINTS...").permitAll()
-                .antMatchers("...ANONYMOUS ENDPOINTS...").anonymous()
-                .antMatchers("...ADMIN-SPECIFIC-ENDPOINTS...").hasRole("ADMIN")
-                .anyRequest().permitAll() // TODO: Change this to "anyRequest().authenticated"
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").anonymous()
+                .anyRequest().authenticated()
                 .and()
 
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/home-initial", true)
                 .and()
 
                 .logout()
-                .logoutUrl("/signout")
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .and()
 
                 .csrf().disable() // TODO: Configure this, instead of avoiding it.
@@ -63,6 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web
                 .ignoring()
-                .antMatchers("/css/**", "/img/**", "/js/**");
+                .antMatchers("/assets/**"); // EVERYTHING IN "STATIC" IS SKIPPED.
     }
 }

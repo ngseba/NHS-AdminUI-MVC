@@ -7,30 +7,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Admin implements UserDetails {
 
 // FIELDS: -------------------------------------------------------------------------------------------------------------
 
-    private int id; // NO @ID TAG. THIS APP HAS NO REPOSITORY.
+    // NO JPA TAGS. THIS APP HAS NO REPOSITORY.
 
-    @NotNull(message = "EMAIL CANNOT BE EMPTY.")
+    private final String ROLE_PREFIX = "ROLE_";
+
+    private int id;
+
+    @NotNull(message = "EMAIL CANNOT BE NULL.")
     @Email(regexp = ".+@.+\\.\\w+", message = "INVALID EMAIL ADDRESS")
     private String email;
 
-    @NotNull(message = "PASSWORD CANNOT BE EMPTY.")
+    @NotNull(message = "PASSWORD CANNOT BE NULL.")
     @Pattern(regexp = "((?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,32})", message = "INVALID PASSWORD")
     private String password;
 
-    @NotNull(message = "FIRST NAME CANNOT BE EMPTY.")
+    @NotNull(message = "FIRST NAME CANNOT BE NULL.")
     private String firstName;
 
-    @NotNull(message = "LAST NAME CANNOT BE EMPTY.")
+    @NotNull(message = "LAST NAME CANNOT BE NULL.")
     private String lastName;
 
-    @NotNull(message = "PHONE NUMBER NAME CANNOT BE EMPTY.")
+    @NotNull(message = "PHONE NUMBER NAME CANNOT BE NULL.")
     @Pattern(regexp = "^0040\\d{9}$", message = "INVALID PHONE NUMBER")
     private String phoneNoRo;
 
@@ -41,6 +45,10 @@ public class Admin implements UserDetails {
 // METHODS: ------------------------------------------------------------------------------------------------------------
 
     public Admin() {
+    }
+
+    public String getROLE_PREFIX() {
+        return ROLE_PREFIX;
     }
 
     public int getId() {
@@ -60,6 +68,10 @@ public class Admin implements UserDetails {
     }
 
     // "getPassword()" IS PART OF THE "UserDetails" OVERRIDDEN METHODS.
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -101,25 +113,21 @@ public class Admin implements UserDetails {
         this.role = role;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getRole());
-        return Arrays.asList(authority);
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
 // OVERRIDDEN METHODS FROM "UserDetails" INTERFACE: --------------------------------------------------------------------
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_PREFIX + getRole());
+        return Collections.singletonList(authority);
     }
 
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
