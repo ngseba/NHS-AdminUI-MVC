@@ -24,7 +24,7 @@ public class InstitutionService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String INSTITUTIONS_URL = "http://" + RestUrlConfig.SERVER_ROOT_URL + "/medical-institutions";
+    private final String INSTITUTIONS_URL =  RestUrlConfig.SERVER_ROOT_URL + "/medical-institutions";
 
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------

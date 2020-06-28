@@ -1,6 +1,5 @@
 package ro.iteahome.nhs.adminui.controller;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,11 +29,10 @@ public class DoctorController {
 
     @GetMapping("/add-form")
     public ModelAndView showAddForm(Doctor doctor) {
-        ArrayList specialties = (ArrayList) doctorService.getSpecialties();
-        ArrayList titles = (ArrayList) doctorService.getTitles();
+        ArrayList<String> specialties = (ArrayList<String>) doctorService.getSpecialties();
+        ArrayList<String> titles = (ArrayList<String>) doctorService.getTitles();
         return new ModelAndView("doctor/add-form")
         .addObject("doctorSpecialties",specialties).addObject("doctorTitles",titles);
-
     }
 
     @GetMapping("/get-form")

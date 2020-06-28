@@ -113,4 +113,8 @@ public class Doctor {
     public void setTitle(String title) {
         this.title = title;
     }
+    public String toString(){
+        return "Doctor : {First name "+this.firstName + " Last name " + this.lastName +" Title:"+this.getTitle() +" Specialty: "+this.getSpecialties()
+                + " Phone number "+this.getPhoneNoRo() + " CNP: "+this.getCnp()+" License: "+this.getLicenseNo()+ " Email: "+this.getEmail()+"}";
+    }
 }

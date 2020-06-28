@@ -24,7 +24,7 @@ public class DoctorService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String DOCTORS_URL = "http://" + RestUrlConfig.SERVER_ROOT_URL + "/doctors";
+    private final String DOCTORS_URL = RestUrlConfig.SERVER_ROOT_URL + "/doctors";
 
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
@@ -38,6 +38,8 @@ public class DoctorService {
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     public Doctor add(Doctor doctor) {
+        System.out.println("DOCTOR");
+        System.out.println(doctor);
         ResponseEntity<Doctor> doctorResponse =
                 restTemplate.exchange(
                         DOCTORS_URL,
