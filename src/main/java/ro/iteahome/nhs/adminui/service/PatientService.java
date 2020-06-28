@@ -24,7 +24,7 @@ public class PatientService {
 
     private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
     private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String PATIENTS_URL = "http://" + RestUrlConfig.SERVER_ROOT_URL + "/patients";
+    private final String PATIENTS_URL = RestUrlConfig.SERVER_ROOT_URL + "/patients";
 
 
 // AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
