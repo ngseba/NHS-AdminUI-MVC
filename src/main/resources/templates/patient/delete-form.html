@@ -17,7 +17,6 @@
 <body class="text-center">
 
 <div class="form-nhs">
-
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Get Patient form</h1>
     <form class="form-nhs" method="POST" th:action="@{/patients/delete-by-cnp}" th:object="${patient}">
@@ -27,12 +26,13 @@
             <span th:errors="*{cnp}" th:if="${#fields.hasErrors('cnp')}"></span>
             <label for="cnp">CNP</label>
         </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Patient</button>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Patient</button>
     </form>
     <br><br>
     <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
     <br><br>
-    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></div>
 
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p></div>
 </body>
 </html>

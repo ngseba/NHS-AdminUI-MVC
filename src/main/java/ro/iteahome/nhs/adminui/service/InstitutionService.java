@@ -95,7 +95,7 @@ public class InstitutionService {
         if (institutionDTO != null) {
             ResponseEntity<Institution> institutionResponse =
                     restTemplate.exchange(
-                            INSTITUTIONS_URL + "/by-cui/" + Cui,
+                            INSTITUTIONS_URL + "/by-cui/" + Cui ,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Institution.class);
