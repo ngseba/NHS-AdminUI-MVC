@@ -31,7 +31,7 @@
 
 
     <div class="form-label-group">
-        <select id="type" name="type" th:field="*{type}" class="form-control">
+        <select id="type" name="type" th:field="*{type}" class="form-control" multiple>
             <option value="" selected disabled>Please select a type</option>
             <option th:each="institutionType : ${types}" th:value="${institutionType}"
                     th:text="${institutionType}"></option>

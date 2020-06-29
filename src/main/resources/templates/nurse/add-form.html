@@ -32,7 +32,7 @@
 
     <div class="form-label-group">
         <select id="specialties" name="specialties" th:field="*{specialties}"
-                class="form-control">
+                class="form-control" multiple>
             <option value="" selected disabled>Please select a speciality</option>
             <option th:each="specialty : ${nurseSpecialties}" th:value="${specialty}" th:text="${specialty}"></option>
         </select>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="form-label-group">
-        <select id="title" name="title" th:field="*{title}" class="form-control">
+        <select id="title" name="title" th:field="*{title}" class="form-control" multiple>
             <option value="" selected disabled>Please select a title</option>
             <option th:each="nurseTitle : ${nurseTitles}" th:value="${nurseTitle}" th:text="${nurseTitle}"></option>
         </select>
