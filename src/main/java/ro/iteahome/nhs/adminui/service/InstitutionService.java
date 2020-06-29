@@ -12,6 +12,7 @@ import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.entity.Institution;
 
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class InstitutionService {
@@ -47,13 +48,13 @@ public class InstitutionService {
         return institutionResponse.getBody();
     }
 
-    public Object getInstitutionType(){
-        ResponseEntity<Object> institutionResponse =
-                restTemplate.exchange(
-                        INSTITUTIONS_URL + "/retrieve-institution-type",
+    public String[] getInstitutionType(){
+        ResponseEntity<String[]> institutionResponse =
+                restTemplate.exchange(INSTITUTIONS_URL + "/type",
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
-                        Object.class);
+                        String[].class
+                );
 
         return institutionResponse.getBody();
     }
@@ -62,7 +63,7 @@ public class InstitutionService {
     public Institution findByCui(String Cui) {
         ResponseEntity<Institution> institutionResponse =
                 restTemplate.exchange(
-                        INSTITUTIONS_URL + "/by-cui/?cui=" + Cui,
+                        INSTITUTIONS_URL + "/by-cui/" + Cui,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Institution.class);
@@ -94,7 +95,7 @@ public class InstitutionService {
         if (institutionDTO != null) {
             ResponseEntity<Institution> institutionResponse =
                     restTemplate.exchange(
-                            INSTITUTIONS_URL + "/delete/by-cui/?cui="+Cui,
+                            INSTITUTIONS_URL + "/by-cui/" + Cui,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Institution.class);

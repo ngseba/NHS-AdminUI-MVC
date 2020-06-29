@@ -42,9 +42,7 @@ public class AdminController {
     }
 
     @GetMapping("/get-form")
-    public String showGetForm(AdminDTO adminDTO) {
-        return "admin/get-form";
-    }
+    public String showGetForm(AdminDTO adminDTO) { return "admin/get-form"; }
 
     @GetMapping("/update-search-form")
     public String showUpdateSearchForm(AdminDTO adminDTO) {
