@@ -11,29 +11,14 @@
     <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 </head>
 
 <body class="text-center">
 
 <div class="form-nhs">
 
-        <form class="form-nhs" method="POST" th:action="@{/patients/delete-by-cnp}" th:object="${patient}">
+    <form class="form-nhs" method="POST" th:action="@{/patients/delete-by-cnp}" th:object="${patient}">
 
         <div class="form-label-group">
             <input id="cnp" name="cnp" th:field="*{cnp}" type="text" class="form-control"
