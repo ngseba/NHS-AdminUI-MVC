@@ -11,28 +11,14 @@
     <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 </head>
 
 <body class="text-center">
 
 
-<form class="form-nhs" method="POST" th:action="@{/medical-institutions/updated-institution}" th:object="${institution}">
+<form class="form-nhs" method="POST" th:action="@{/medical-institutions/updated-institution}"
+      th:object="${institution}">
     <input id="id" name="id" th:field="*{id}" type="hidden">
     <input id="cui" name="cui" th:field="*{cui}" type="hidden">
 
@@ -50,7 +36,8 @@
     <div class="form-label-group">
         <select id="type" name="type" th:field="*{type}" class="form-control">
             <option value="" selected disabled>Please select a type</option>
-            <option th:each="institutionType : ${types}" th:value="${institutionType}" th:text="${institutionType}"></option>
+            <option th:each="institutionType : ${types}" th:value="${institutionType}"
+                    th:text="${institutionType}"></option>
         </select>
         <span th:errors="*{type}" th:if="${#fields.hasErrors('type')}"></span>
     </div>

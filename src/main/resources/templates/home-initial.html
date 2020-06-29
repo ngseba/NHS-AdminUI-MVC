@@ -9,7 +9,10 @@
     <link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
 
+    <link href="/assets/styles/nhsforms.css" rel="stylesheet">
+
     <link href="/assets/styles/home-initial.css" rel="stylesheet">
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -21,22 +24,7 @@
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
 
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 </head>
 
 <body class="text-center">
@@ -109,18 +97,19 @@
         <br>
 
     </div>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        }), $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
+    </script>
 
-
-    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </div>
+<p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+
 </body>
 
-<script>
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    }), $('.popover-dismiss').popover({
-        trigger: 'focus'
-    })
-</script>
+
 
 </html>
