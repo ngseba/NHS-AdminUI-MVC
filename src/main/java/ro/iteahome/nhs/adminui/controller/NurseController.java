@@ -26,14 +26,13 @@ public class NurseController {
 
 // LINK "GET" REQUESTS: ------------------------------------------------------------------------------------------------
 
-
-
     @GetMapping("/add-form")
     public ModelAndView showAddForm(Nurse nurse) {
-        ArrayList specialties = (ArrayList) nurseService.getSpecialties();
-        ArrayList titles = (ArrayList) nurseService.getTitles();
+        String[] nurseSpecialties = nurseService.getSpecialties();
+        String[] nurseTitles = nurseService.getTitles();
         return new ModelAndView("nurse/add-form")
-        .addObject("nurseSpecialties",specialties).addObject("nurseTitles",titles);
+            .addObject("nurseSpecialties",nurseSpecialties)
+                .addObject("nurseTitles",nurseTitles);
     }
 
     @GetMapping("/get-form")
@@ -68,11 +67,12 @@ public class NurseController {
 
     @GetMapping("/update-form-by-cnp")
     public ModelAndView showUpdateFormByCnp(Nurse nurse) {
-        ArrayList specialties = (ArrayList) nurseService.getSpecialties();
-        ArrayList titles = (ArrayList) nurseService.getTitles();
+        String[] nurseSpecialties =  nurseService.getSpecialties();
+        String[] nurseTitles = nurseService.getTitles();
         Nurse databaseNurse = nurseService.findByCnp(nurse.getCnp());
         return new ModelAndView("nurse/update-form").addObject(databaseNurse)
-        .addObject("nurseSpecialties",specialties).addObject("nurseTitles",titles);
+            .addObject("nurseSpecialties",nurseSpecialties)
+                .addObject("nurseTitles",nurseTitles);
     }
 
     @PostMapping("/updated-nurse")

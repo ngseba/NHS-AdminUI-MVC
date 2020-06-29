@@ -52,7 +52,7 @@ public class PatientService {
     public Patient findByCnp(String Cnp) {
         ResponseEntity<Patient> patientResponse =
                 restTemplate.exchange(
-                        PATIENTS_URL + "/by-cnp/?cnp=" + Cnp,
+                        PATIENTS_URL + "/by-cnp/" + Cnp,
                         HttpMethod.GET,
                         new HttpEntity<>(getAuthHeaders()),
                         Patient.class);
@@ -84,7 +84,7 @@ public class PatientService {
         if (patientDTO != null) {
             ResponseEntity<Patient> patientResponse =
                     restTemplate.exchange(
-                            PATIENTS_URL + "/by-cnp/?cnp=" + Cnp,
+                            PATIENTS_URL + "/by-cnp/" + Cnp,
                             HttpMethod.DELETE,
                             new HttpEntity<>(getAuthHeaders()),
                             Patient.class);

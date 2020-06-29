@@ -39,9 +39,7 @@ public class RoleController {
     }
 
     @GetMapping("/get-form")
-    public String showGetForm(RoleDTO roleDTO) {
-        return "role/get-form";
-    }
+    public String showGetForm(RoleDTO roleDTO) { return "role/get-form"; }
 
     @GetMapping("/update-search-form")
     public String showUpdateSearchForm(RoleDTO roleDTO) {
@@ -87,7 +85,7 @@ public class RoleController {
         return new ModelAndView("role/update-form").addObject(foundRoleDTO);
     }
 
-    @PutMapping("/updated-role")
+    @PostMapping("/updated-role")
     public ModelAndView update(RoleDTO foundRoleDTO) {
         Role role = modelMapper.map(foundRoleDTO, Role.class);
         RoleDTO roleDTO = roleService.update(role);
