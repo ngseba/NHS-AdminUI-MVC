@@ -11,22 +11,7 @@
     <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 </head>
 
 <body class="text-center">
@@ -34,7 +19,8 @@
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Search Institution form</h1>
 
-    <form class="form-nhs" method="GET" th:action="@{/medical-institutions/update-form-by-cui}" th:object="${institution}">
+    <form class="form-nhs" method="GET" th:action="@{/medical-institutions/update-form-by-cui}"
+          th:object="${institution}">
 
         <div class="form-label-group">
             <input id="cui" name="cui" th:field="*{cui}" type="text" class="form-control"
@@ -47,7 +33,7 @@
     </form>
 
     <br><br>
-    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <a href="/home-initial" class="btn btn-lg btn-secondary btn-block">Go back</a>
     <br><br>
 
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p></div>

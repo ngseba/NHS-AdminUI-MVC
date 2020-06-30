@@ -13,11 +13,13 @@ body {
     background-color: #f5f5f5;
 }
 
+
 .form-nhs {
     width: 100%;
     max-width: 420px;
-    padding: 15px;
     margin: auto;
+    padding: 15px;
+
 }
 
 .form-label-group {
@@ -85,6 +87,7 @@ body {
     .form-label-group > label {
         display: none;
     }
+
     .form-label-group input::-ms-input-placeholder {
         color: #777;
     }
@@ -96,6 +99,7 @@ body {
     .form-label-group > label {
         display: none;
     }
+
     .form-label-group input:-ms-input-placeholder {
         color: #777;
     }

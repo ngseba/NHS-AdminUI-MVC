@@ -9,30 +9,22 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
     <!-- Custom styles for this template -->
     <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
 </head>
 
 <body class="text-center">
 
 
-<form class="form-nhs" method="POST" th:action="@{/medical-institutions/updated-institution}" th:object="${institution}">
+<form class="form-nhs" method="POST" th:action="@{/medical-institutions/updated-institution}"
+      th:object="${institution}">
     <input id="id" name="id" th:field="*{id}" type="hidden">
     <input id="cui" name="cui" th:field="*{cui}" type="hidden">
 
@@ -47,10 +39,12 @@
     </div>
 
 
-    <div class="form-label-group">
-        <select id="type" name="type" th:field="*{type}" class="form-control">
+    <div class="form-label-group type">
+        <select id="type" name="type" th:field="*{type}" class="form-control selectpicker" multiple
+                data-live-search="true">
             <option value="" selected disabled>Please select a type</option>
-            <option th:each="institutionType : ${types}" th:value="${institutionType}" th:text="${institutionType}"></option>
+            <option th:each="institutionType : ${types}" th:value="${institutionType}"
+                    th:text="${institutionType}"></option>
         </select>
         <span th:errors="*{type}" th:if="${#fields.hasErrors('type')}"></span>
     </div>
@@ -86,10 +80,18 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Update Institution</button>
 
     <br><br>
-    <a href="/" class="btn btn-lg btn-secondary btn-block">Go back</a>
+    <a href="/home-initial" class="btn btn-lg btn-secondary btn-block">Go back</a>
     <br><br>
 
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p></form>
+
+<script>
+    $('select').selectpicker();
+    let typeDiv = $('.type .filter-option-inner-inner');
+    if (typeDiv.html() == "Select an option")
+        typeDiv.html("Please select a type");
+</script>
+
 </body>
 </html>
 
