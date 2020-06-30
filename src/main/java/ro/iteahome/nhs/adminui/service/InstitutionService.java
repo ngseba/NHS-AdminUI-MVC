@@ -12,7 +12,6 @@ import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.entity.Institution;
 
 import java.util.Base64;
-import java.util.List;
 
 @Service
 public class InstitutionService {
