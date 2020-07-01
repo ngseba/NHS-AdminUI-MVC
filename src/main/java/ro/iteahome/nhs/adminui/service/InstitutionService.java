@@ -2,69 +2,53 @@ package ro.iteahome.nhs.adminui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ro.iteahome.nhs.adminui.config.RestUrlConfig;
+import ro.iteahome.nhs.adminui.config.rest.RestConfig;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.entity.Institution;
 
-import java.util.Base64;
-
 @Service
 public class InstitutionService {
-    // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
+
+// DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
     @Autowired
     private RestTemplate restTemplate;
 
-// FIELDS: -------------------------------------------------------------------------------------------------------------
-
-    private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
-    private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String INSTITUTIONS_URL = RestUrlConfig.SERVER_ROOT_URL + "/medical-institutions";
-
-
-// AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
-
-    private HttpHeaders getAuthHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Basic " + ENCODED_CREDENTIALS);
-        return headers;
-    }
+    @Autowired
+    private RestConfig restConfig;
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     public Institution add(Institution institution) {
         ResponseEntity<Institution> institutionResponse =
                 restTemplate.exchange(
-                        INSTITUTIONS_URL,
+                        restConfig.getSERVER_URL() + restConfig.getINSTITUTIONS_URI(),
                         HttpMethod.POST,
-                        new HttpEntity<>(institution, getAuthHeaders()),
+                        new HttpEntity<>(institution, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Institution.class);
         return institutionResponse.getBody();
     }
 
-    public String[] getInstitutionType(){
+    public String[] getInstitutionTypes() {
         ResponseEntity<String[]> institutionResponse =
-                restTemplate.exchange(INSTITUTIONS_URL + "/type",
+                restTemplate.exchange(
+                        restConfig.getSERVER_URL() + restConfig.getINSTITUTIONS_URI() + "/type",
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
-                        String[].class
-                );
-
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
+                        String[].class);
         return institutionResponse.getBody();
     }
 
-
-    public Institution findByCui(String Cui) {
+    public Institution findByCui(String cui) {
         ResponseEntity<Institution> institutionResponse =
                 restTemplate.exchange(
-                        INSTITUTIONS_URL + "/by-cui/" + Cui,
+                        restConfig.getSERVER_URL() + restConfig.getINSTITUTIONS_URI() + "/by-cui/" + cui,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Institution.class);
         Institution institutionDTO = institutionResponse.getBody();
         if (institutionDTO != null) {
@@ -78,9 +62,9 @@ public class InstitutionService {
         Institution institutionDTO = findByCui(newInstitution.getCui());
         if (institutionDTO != null) {
             restTemplate.exchange(
-                    INSTITUTIONS_URL,
+                    restConfig.getSERVER_URL() + restConfig.getINSTITUTIONS_URI(),
                     HttpMethod.PUT,
-                    new HttpEntity<>(newInstitution, getAuthHeaders()),
+                    new HttpEntity<>(newInstitution, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                     Institution.class);
             return findByCui(newInstitution.getCui());
         } else {
@@ -88,20 +72,18 @@ public class InstitutionService {
         }
     }
 
-
-    public Institution deleteByCui(String Cui) {
-        Institution institutionDTO = findByCui(Cui);
+    public Institution deleteByCui(String cui) {
+        Institution institutionDTO = findByCui(cui);
         if (institutionDTO != null) {
             ResponseEntity<Institution> institutionResponse =
                     restTemplate.exchange(
-                            INSTITUTIONS_URL + "/by-cui/" + Cui ,
+                            restConfig.getSERVER_URL() + restConfig.getINSTITUTIONS_URI() + "/by-cui/" + cui,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
+                            new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                             Institution.class);
             return institutionResponse.getBody();
         } else {
             throw new GlobalNotFoundException("INSTITUTIONS");
         }
     }
-
 }

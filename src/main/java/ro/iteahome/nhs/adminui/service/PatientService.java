@@ -2,59 +2,43 @@ package ro.iteahome.nhs.adminui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ro.iteahome.nhs.adminui.config.RestUrlConfig;
+import ro.iteahome.nhs.adminui.config.rest.RestConfig;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.entity.Patient;
 
-import java.util.Base64;
-
 @Service
 public class PatientService {
-    // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
+
+// DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
     @Autowired
     private RestTemplate restTemplate;
 
-// FIELDS: -------------------------------------------------------------------------------------------------------------
-
-    private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
-    private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String PATIENTS_URL = RestUrlConfig.SERVER_ROOT_URL + "/patients";
-
-
-// AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
-
-    private HttpHeaders getAuthHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Basic " + ENCODED_CREDENTIALS);
-        return headers;
-    }
+    @Autowired
+    private RestConfig restConfig;
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
     public Patient add(Patient patient) {
         ResponseEntity<Patient> patientResponse =
                 restTemplate.exchange(
-                        PATIENTS_URL,
+                        restConfig.getSERVER_URL() + restConfig.getPATIENTS_URI(),
                         HttpMethod.POST,
-                        new HttpEntity<>(patient, getAuthHeaders()),
+                        new HttpEntity<>(patient, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Patient.class);
         return patientResponse.getBody();
     }
 
-
-
-    public Patient findByCnp(String Cnp) {
+    public Patient findByCnp(String cnp) {
         ResponseEntity<Patient> patientResponse =
                 restTemplate.exchange(
-                        PATIENTS_URL + "/by-cnp/" + Cnp,
+                        restConfig.getSERVER_URL() + restConfig.getPATIENTS_URI() + "/by-cnp/" + cnp,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Patient.class);
         Patient patientDTO = patientResponse.getBody();
         if (patientDTO != null) {
@@ -68,9 +52,9 @@ public class PatientService {
         Patient patientDTO = findByCnp(newPatient.getCnp());
         if (patientDTO != null) {
             restTemplate.exchange(
-                    PATIENTS_URL,
+                    restConfig.getSERVER_URL() + restConfig.getPATIENTS_URI(),
                     HttpMethod.PUT,
-                    new HttpEntity<>(newPatient, getAuthHeaders()),
+                    new HttpEntity<>(newPatient, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                     Patient.class);
             return findByCnp(patientDTO.getCnp());
         } else {
@@ -78,20 +62,18 @@ public class PatientService {
         }
     }
 
-
-    public Patient deleteByCnp(String Cnp) {
-        Patient patientDTO = findByCnp(Cnp);
+    public Patient deleteByCnp(String cnp) {
+        Patient patientDTO = findByCnp(cnp);
         if (patientDTO != null) {
             ResponseEntity<Patient> patientResponse =
                     restTemplate.exchange(
-                            PATIENTS_URL + "/by-cnp/" + Cnp,
+                            restConfig.getSERVER_URL() + restConfig.getPATIENTS_URI() + "/by-cnp/" + cnp,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
+                            new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                             Patient.class);
             return patientResponse.getBody();
         } else {
             throw new GlobalNotFoundException("PATIENTS");
         }
     }
-
 }
