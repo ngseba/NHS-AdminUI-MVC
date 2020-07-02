@@ -2,92 +2,75 @@ package ro.iteahome.nhs.adminui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ro.iteahome.nhs.adminui.config.RestUrlConfig;
+import ro.iteahome.nhs.adminui.config.rest.RestConfig;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.entity.Nurse;
 
-import java.util.Base64;
-
 @Service
 public class NurseService {
-    // DEPENDENCIES: -------------------------------------------------------------------------------------------------------
+
+// DEPENDENCIES: -------------------------------------------------------------------------------------------------------
 
     @Autowired
     private RestTemplate restTemplate;
 
-// FIELDS: -------------------------------------------------------------------------------------------------------------
-
-    private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
-    private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String NURSES_URL = RestUrlConfig.SERVER_ROOT_URL + "/nurses";
-
-
-// AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
-
-    private HttpHeaders getAuthHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Basic " + ENCODED_CREDENTIALS);
-        return headers;
-    }
+    @Autowired
+    private RestConfig restConfig;
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
-    public Nurse add(Nurse Nurse) {
+    public Nurse add(Nurse nurse) {
         ResponseEntity<Nurse> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL,
+                        restConfig.getSERVER_URL() + restConfig.getNURSES_URI(),
                         HttpMethod.POST,
-                        new HttpEntity<>(Nurse, getAuthHeaders()),
+                        new HttpEntity<>(nurse, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Nurse.class);
         return nurseResponse.getBody();
     }
 
-
-    public String[] getSpecialties(){
+    public String[] getSpecialties() {
         ResponseEntity<String[]> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/specialty",
+                        restConfig.getSERVER_URL() + restConfig.getNURSES_URI() + "/specialty",
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         String[].class);
 
         return nurseResponse.getBody();
     }
 
-    public String[] getTitles(){
+    public String[] getTitles() {
         ResponseEntity<String[]> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/title",
+                        restConfig.getSERVER_URL() + restConfig.getNURSES_URI() + "/title",
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         String[].class);
 
         return nurseResponse.getBody();
     }
 
-
-    public boolean existsByCnp(String cnp,String licenseNo) {
+    public boolean existsByCnp(String cnp, String licenseNo) {
         ResponseEntity<Boolean> nurseExists =
                 restTemplate.exchange(
-                        NURSES_URL + "/existence/by-cnp/" + cnp,
+                        restConfig.getSERVER_URL() + restConfig.getNURSES_URI() + "/existence/by-cnp/" + cnp,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Boolean.class);
         return nurseExists.getBody();
     }
 
-
-    public Nurse findByCnp(String Cnp) {
+    public Nurse findByCnp(String cnp) {
         ResponseEntity<Nurse> nurseResponse =
                 restTemplate.exchange(
-                        NURSES_URL + "/by-cnp/" + Cnp,
+                        restConfig.getSERVER_URL() + restConfig.getNURSES_URI() + "/by-cnp/" + cnp,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Nurse.class);
         Nurse nurseDTO = nurseResponse.getBody();
         if (nurseDTO != null) {
@@ -101,9 +84,9 @@ public class NurseService {
         Nurse nurseDTO = findByCnp(newNurse.getCnp());
         if (nurseDTO != null) {
             restTemplate.exchange(
-                    NURSES_URL,
+                    restConfig.getSERVER_URL() + restConfig.getNURSES_URI(),
                     HttpMethod.PUT,
-                    new HttpEntity<>(newNurse, getAuthHeaders()),
+                    new HttpEntity<>(newNurse, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                     Nurse.class);
             return findByCnp(nurseDTO.getCnp());
         } else {
@@ -111,19 +94,18 @@ public class NurseService {
         }
     }
 
-    public Nurse deleteByCnp(String Cnp) {
-        Nurse nurseDTO = findByCnp(Cnp);
+    public Nurse deleteByCnp(String cnp) {
+        Nurse nurseDTO = findByCnp(cnp);
         if (nurseDTO != null) {
             ResponseEntity<Nurse> nurseResponse =
                     restTemplate.exchange(
-                            NURSES_URL + "/by-cnp/" + Cnp,
+                            restConfig.getSERVER_URL() + restConfig.getNURSES_URI() + "/by-cnp/" + cnp,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
+                            new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                             Nurse.class);
             return nurseResponse.getBody();
         } else {
             throw new GlobalNotFoundException("NURSE");
         }
     }
-
 }

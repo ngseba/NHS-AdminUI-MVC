@@ -28,7 +28,7 @@ public class InstitutionController {
 
     @GetMapping("/add-form")
     public ModelAndView showAddForm(Institution institution) {
-        String[] institutionTypes =  institutionService.getInstitutionType();
+        String[] institutionTypes =  institutionService.getInstitutionTypes();
         return new ModelAndView("institution/add-form").addObject("types",institutionTypes);
     }
 
@@ -65,7 +65,7 @@ public class InstitutionController {
 
     @GetMapping("/update-form-by-cui")
     public ModelAndView showUpdateFormByCui(Institution institution) {
-        String[] institutionTypes = institutionService.getInstitutionType();
+        String[] institutionTypes = institutionService.getInstitutionTypes();
         Institution databaseInstitution = institutionService.findByCui(institution.getCui());
         return new ModelAndView("institution/update-form")
                 .addObject(databaseInstitution).addObject("types",institutionTypes);
