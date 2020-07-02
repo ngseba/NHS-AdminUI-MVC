@@ -66,12 +66,7 @@ public class ClientAppController {
 
     @PostMapping
     public ModelAndView add(ClientAppDTO clientAppDTO) {
-        System.out.println(clientAppDTO.getName());
-        System.out.println(clientAppDTO.getPassword());
-        System.out.println(clientAppDTO.getRoleName());
         RoleDTO databaseRole = roleService.findByName(clientAppDTO.getRoleName());
-        System.out.println("database Role");
-        System.out.println(databaseRole.getName());
         ClientApp databaseClientApp = clientAppService.add(clientAppDTO,databaseRole.getId());
         return new ModelAndView("client-app/home-client-app").addObject(databaseClientApp);
     }
@@ -90,6 +85,7 @@ public class ClientAppController {
 
     @GetMapping("/update-form-by-name")
     public ModelAndView showUpdateFormByName(ClientApp clientApp) {
+        System.out.println(clientApp.getName());
         ClientApp databaseClientApp = clientAppService.findByName(clientApp.getName());
         return new ModelAndView("client-app/update-form").addObject(databaseClientApp);
     }
@@ -108,16 +104,10 @@ public class ClientAppController {
                 .addObject(databaseRole);
     }
 
-    @PostMapping("/deleted-role-id")
-    public ModelAndView deleteById(RoleDTO roleDTO) {
-        RoleDTO targetRoleDTO = roleService.deleteById(roleDTO.getId());
-        return new ModelAndView("role/home-role").addObject(targetRoleDTO);
-    }
-
-    @PostMapping("/deleted-role-name")
-    public ModelAndView deleteByName(RoleDTO roleDTO) {
-        RoleDTO targetRoleDTO = roleService.deleteByName(roleDTO.getName());
-        return new ModelAndView("role/home-role").addObject(targetRoleDTO);
+    @PostMapping("/deleted-client-app-name")
+    public ModelAndView deleteByName(ClientApp clientApp) {
+        ClientApp databaseClientApp = clientAppService.deleteByName(clientApp.getName());
+        return new ModelAndView("client-app/home-client-app").addObject(databaseClientApp);
     }
 
 // OTHER METHODS: ------------------------------------------------------------------------------------------------------
@@ -126,7 +116,7 @@ public class ClientAppController {
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new LinkedHashMap<>();
         errors.put("errorCode", "ROL-00");
-        errors.put("errorMessage", "ROLE FIELDS HAVE VALIDATION ERRORS.");
+        errors.put("errorMessage", "CLIENT APP FIELDS HAVE VALIDATION ERRORS.");
         errors.putAll(ex.getBindingResult()
                 .getFieldErrors()
                 .stream()

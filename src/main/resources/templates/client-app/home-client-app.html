@@ -32,19 +32,22 @@
 
 </div>
 <br>
-<h1 class="h3 mb-3 font-weight-normal contents">Your last Role request result:</h1>
+<h1 class="h3 mb-3 font-weight-normal contents">Your last Client App request result:</h1>
 <br>
 <table class="table contents">
     <thead>
     <tr>
         <th>ID</th>
-        <th>ROLE NAME</th>
+        <th>CLIENT APP NAME</th>
+        <th>CLIENT APP PASSWORD</th>
+
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td th:text="${roleDTO.id}"></td>
-        <td th:text="${roleDTO.name}"></td>
+        <td th:text="${clientApp.id}"></td>
+        <td th:text="${clientApp.name}"></td>
+        <td th:text="${clientApp.password}"></td>
     </tr>
     </tbody>
 </table>

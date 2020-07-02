@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>NHS Delete Role</title>
+    <title>NHS Delete Client App</title>
     <link rel="shortcut icon" type="image/png" href="../assets/brand/n.png">
 
 
@@ -18,24 +18,9 @@
 
 <div class="form-nhs">
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
-    <h1 class="h3 mb-3 font-weight-normal">Delete Role form</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Delete Client App form</h1>
 
-
-    <form class="form-nhs" method="POST" th:action="@{/roles/deleted-role-id}" th:object="${roleDTO}">
-
-
-        <div class="form-label-group">
-            <input id="id" name="id" th:field="*{id}" type="id" class="form-control"
-                   placeholder="ID" autofocus>
-            <span th:errors="*{id}" th:if="${#fields.hasErrors('id')}"></span>
-            <label for="id">ID</label>
-        </div>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Role</button>
-    </form>
-
-
-    <form class="form-nhs" method="POST" th:action="@{/roles/deleted-role-name}" th:object="${roleDTO}">
+    <form class="form-nhs" method="POST" th:action="@{/client-apps/deleted-client-app-name}" th:object="${clientApp}">
 
         <div class="form-label-group">
             <input id="name" name="name" th:field="*{name}" type="name" class="form-control"
@@ -44,7 +29,7 @@
             <label for="name">Name</label>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Role</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete Client App</button>
     </form>
 
     <br><br>
