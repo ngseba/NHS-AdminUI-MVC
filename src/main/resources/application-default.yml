@@ -1,0 +1,5 @@
+# REST API CONNECTION - REMOTE:
+
+nhs:
+  rest:
+    server-url: "https://nhsbackend.myserverapps.com"

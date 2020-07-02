@@ -3,7 +3,6 @@ package ro.iteahome.nhs.adminui.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,14 +11,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ro.iteahome.nhs.adminui.config.RestUrlConfig;
+import ro.iteahome.nhs.adminui.config.rest.RestConfig;
 import ro.iteahome.nhs.adminui.exception.business.GlobalAlreadyExistsException;
 import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.dto.AdminCreationDTO;
 import ro.iteahome.nhs.adminui.model.dto.AdminDTO;
 import ro.iteahome.nhs.adminui.model.entity.Admin;
 
-import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -31,24 +29,13 @@ public class AdminService implements UserDetailsService {
     private RestTemplate restTemplate;
 
     @Autowired
+    private RestConfig restConfig;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ModelMapper modelMapper;
-
-// FIELDS: -------------------------------------------------------------------------------------------------------------
-
-    private final String CREDENTIALS = "NHS_ADMIN_UI:P@ssW0rd!";
-    private final String ENCODED_CREDENTIALS = new String(Base64.getEncoder().encode(CREDENTIALS.getBytes()));
-    private final String ADMINS_URL = RestUrlConfig.SERVER_ROOT_URL + "/admins";
-
-// AUTHENTICATION FOR REST REQUESTS: -----------------------------------------------------------------------------------
-
-    private HttpHeaders getAuthHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Basic " + ENCODED_CREDENTIALS);
-        return headers;
-    }
 
 // C.R.U.D. METHODS: ---------------------------------------------------------------------------------------------------
 
@@ -56,9 +43,9 @@ public class AdminService implements UserDetailsService {
         Admin admin = buildAdmin(adminCreationDTO);
         ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
-                        ADMINS_URL,
+                        restConfig.getSERVER_URL() + restConfig.getADMINS_URI(),
                         HttpMethod.POST,
-                        new HttpEntity<>(admin, getAuthHeaders()),
+                        new HttpEntity<>(admin, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         AdminDTO.class);
         AdminDTO adminDTO = responseAdminDTO.getBody();
         if (adminDTO != null) {
@@ -71,9 +58,9 @@ public class AdminService implements UserDetailsService {
     public AdminDTO findById(int id) {
         ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
-                        ADMINS_URL + "/by-id/" + id,
+                        restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/by-id/" + id,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         AdminDTO.class);
         AdminDTO adminDTO = responseAdminDTO.getBody();
         if (adminDTO != null) {
@@ -86,9 +73,9 @@ public class AdminService implements UserDetailsService {
     public AdminDTO findByEmail(String email) {
         ResponseEntity<AdminDTO> responseAdminDTO =
                 restTemplate.exchange(
-                        ADMINS_URL + "/by-email/" + email,
+                        restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/by-email/" + email,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         AdminDTO.class);
         AdminDTO adminDTO = responseAdminDTO.getBody();
         if (adminDTO != null) {
@@ -101,9 +88,9 @@ public class AdminService implements UserDetailsService {
     public Admin findSensitiveById(int id) {
         ResponseEntity<Admin> adminResponse =
                 restTemplate.exchange(
-                        ADMINS_URL + "/sensitive/by-id/" + id,
+                        restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/sensitive/by-id/" + id,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Admin.class);
         Admin admin = adminResponse.getBody();
         if (admin != null) {
@@ -116,9 +103,9 @@ public class AdminService implements UserDetailsService {
     public Admin findSensitiveByEmail(String email) {
         ResponseEntity<Admin> adminResponse =
                 restTemplate.exchange(
-                        ADMINS_URL + "/sensitive/by-email/" + email,
+                        restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/sensitive/by-email/" + email,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Admin.class);
         Admin admin = adminResponse.getBody();
         if (admin != null) {
@@ -128,13 +115,13 @@ public class AdminService implements UserDetailsService {
         }
     }
 
-    public AdminDTO update(Admin admin) { // TODO: This works in Edge. Chrome, however, does not populate the "password" field... Find a solution.
+    public AdminDTO update(Admin admin) {
         AdminDTO adminDTO = findById(admin.getId());
         if (adminDTO != null) {
             return restTemplate.exchange(
-                    ADMINS_URL,
+                    restConfig.getSERVER_URL() + restConfig.getADMINS_URI(),
                     HttpMethod.PUT,
-                    new HttpEntity<>(admin, getAuthHeaders()),
+                    new HttpEntity<>(admin, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                     AdminDTO.class).getBody();
         } else {
             throw new GlobalNotFoundException("ADMIN");
@@ -146,9 +133,9 @@ public class AdminService implements UserDetailsService {
         if (adminDTO != null) {
             ResponseEntity<AdminDTO> responseAdminDTO =
                     restTemplate.exchange(
-                            ADMINS_URL + "/by-id/" + id,
+                            restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/by-id/" + id,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
+                            new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                             AdminDTO.class);
             return responseAdminDTO.getBody();
         } else {
@@ -161,9 +148,9 @@ public class AdminService implements UserDetailsService {
         if (adminDTO != null) {
             ResponseEntity<AdminDTO> responseAdminDTO =
                     restTemplate.exchange(
-                            ADMINS_URL + "/by-email/" + email,
+                            restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/by-email/" + email,
                             HttpMethod.DELETE,
-                            new HttpEntity<>(getAuthHeaders()),
+                            new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                             AdminDTO.class);
             return responseAdminDTO.getBody();
         } else {
@@ -177,9 +164,9 @@ public class AdminService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         ResponseEntity<Admin> responseAdmin =
                 restTemplate.exchange(
-                        ADMINS_URL + "/sensitive/by-email/" + email,
+                        restConfig.getSERVER_URL() + restConfig.getADMINS_URI() + "/sensitive/by-email/" + email,
                         HttpMethod.GET,
-                        new HttpEntity<>(getAuthHeaders()),
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         Admin.class);
         Optional<Admin> optionalAdmin = Optional.ofNullable(responseAdmin.getBody());
         return optionalAdmin.orElseThrow(() -> new UsernameNotFoundException(email));
