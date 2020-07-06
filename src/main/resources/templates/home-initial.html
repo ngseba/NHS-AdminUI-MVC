@@ -27,11 +27,11 @@
 
 </head>
 
-<body class="text-center">
+<body class="text-center form-nhs">
 <div class="form-nhs" th:fragment="categories">
     <img class="mb-4" src="../assets/brand/n.png" alt="" width="156" height="156">
     <br>
-    <h1 class="h3 mb-3 font-weight-normal">Welcome to NHS Admin!</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Welcome to NHS Admin UI!</h1>
     <br>
 
 
@@ -40,7 +40,7 @@
 
         <button id="headingAdmin" class="btn btn-lg btn-primary btn-block collapsed" data-toggle="collapse"
                 data-target="#collapseAdmin" aria-expanded="true" aria-controls="collapseAdmin">
-            Admin
+            Admins
         </button>
 
 
@@ -64,7 +64,7 @@
 
         <button id="headingRole" class="btn btn-lg btn-primary btn-block collapsed" data-toggle="collapse"
                 data-target="#collapseRole" aria-expanded="false" aria-controls="collapseRole">
-            Role
+            Roles
         </button>
 
         <div id="collapseRole" class="collapse" aria-labelledby="headingRole" data-parent="#accordion">
@@ -87,7 +87,7 @@
         <button id="headingInstitution" class="btn btn-lg btn-primary btn-block collapsed" data-toggle="collapse"
                 data-target="#collapseInstitution" aria-expanded="false"
                 aria-controls="collapseInstitution">
-            Institution
+            Institutions
         </button>
 
         <div id="collapseInstitution" class="collapse" aria-labelledby="headingInstitution"
@@ -110,7 +110,7 @@
 
         <button id="headingDoctor" class="btn btn-lg btn-primary btn-block collapsed" data-toggle="collapse"
                 data-target="#collapseDoctor" aria-expanded="false" aria-controls="collapseDoctor">
-            Doctor
+            Doctors
         </button>
 
         <div id="collapseDoctor" class="collapse" aria-labelledby="headingDoctor" data-parent="#accordion">
@@ -132,7 +132,7 @@
 
         <button id="headingNurse" class="btn btn-lg btn-primary btn-block collapsed" data-toggle="collapse"
                 data-target="#collapseNurse" aria-expanded="false" aria-controls="collapseNurse">
-            Nurse
+            Nurses
         </button>
 
         <div id="collapseNurse" class="collapse" aria-labelledby="headingNurse" data-parent="#accordion">
@@ -154,7 +154,7 @@
 
         <button id="headingPatient" class="btn btn-lg btn-primary btn-block collapsed" data-toggle="collapse"
                 data-target="#collapsePatient" aria-expanded="false" aria-controls="collapsePatient">
-            Patient
+            Patients
         </button>
 
         <div id="collapsePatient" class="collapse" aria-labelledby="headingPatient" data-parent="#accordion">
@@ -199,6 +199,10 @@
 
 
 </div>
+
+<a href="/logout" class="btn btn-md btn-danger btn-block"
+   style="width: 50%; margin-left:25%; margin-right: 25% ">Logout</a>
+<br>
 <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 
 </body>

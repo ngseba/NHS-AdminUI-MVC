@@ -93,13 +93,23 @@
 
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p></form>
 
-<script>
+<script th:inline="javascript">
     $('select').selectpicker();
-    let specialtiesDiv = $('.specialties .filter-option-inner-inner');
     let titleDiv = $('.title .filter-option-inner-inner');
-    if (specialtiesDiv.html() == "Select an option")
+    let specialtiesDiv = $('.specialties .filter-option-inner-inner');
+    let titleArr = [[${nurse.title}]].split(',')
+        .map(title => { return title });
+    let specialtiesArr = [[${nurse.specialties}]].split(',')
+        .map(specialty => { return specialty });
+    if (specialtiesArr[0] != ""){
+        $('.specialties .selectpicker').selectpicker('val', specialtiesArr);
+    }
+    else
         specialtiesDiv.html("Please select a specialty");
-    if (titleDiv.html() == "Select an option")
+    if (titleArr[0] != ""){
+        $('.title .selectpicker').selectpicker('val', titleArr);
+    }
+    else
         titleDiv.html("Please select a title");
 </script>
 
