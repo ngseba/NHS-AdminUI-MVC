@@ -10,6 +10,8 @@ public class ClientApp {
 
     private String password;
 
+    private int status;
+
 // METHODS: ------------------------------------------------------------------------------------------------------------
 
     public ClientApp() {
@@ -37,5 +39,13 @@ public class ClientApp {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

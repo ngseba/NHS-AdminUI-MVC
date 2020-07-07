@@ -3,6 +3,8 @@ package ro.iteahome.nhs.adminui.model.dto;
 import ro.iteahome.nhs.adminui.model.entity.Role;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
 public class ClientAppDTO {
 
@@ -12,7 +14,11 @@ public class ClientAppDTO {
 
     private String password;
 
-    private String roleName;
+    private int status;
+
+    List<Role> rolesList;
+
+    String selectedRoleName;
 
 // METHODS: ------------------------------------------------------------------------------------------------------------
 
@@ -43,11 +49,27 @@ public class ClientAppDTO {
         this.password = password;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public List<Role> getRolesList() {
+        return rolesList;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRolesList(List<Role> rolesList) {
+        this.rolesList = rolesList;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getSelectedRoleName() {
+        return selectedRoleName;
+    }
+
+    public void setSelectedRoleName(String selectedRoleName) {
+        this.selectedRoleName = selectedRoleName;
     }
 }

@@ -1,6 +1,7 @@
 package ro.iteahome.nhs.adminui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import ro.iteahome.nhs.adminui.exception.business.GlobalNotFoundException;
 import ro.iteahome.nhs.adminui.model.dto.RoleCreationDTO;
 import ro.iteahome.nhs.adminui.model.dto.RoleDTO;
 import ro.iteahome.nhs.adminui.model.entity.Role;
+
+import java.util.List;
 
 @Service
 public class RoleService {
@@ -32,6 +35,17 @@ public class RoleService {
                         HttpMethod.POST,
                         new HttpEntity<>(roleCreationDTO, restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
                         RoleDTO.class);
+        return roleResponse.getBody();
+    }
+
+    public List<Role> getRolesList() {
+        ParameterizedTypeReference<List<Role>> responseType = new ParameterizedTypeReference<>() {};
+        ResponseEntity<List<Role>> roleResponse =
+                restTemplate.exchange(
+                        restConfig.getSERVER_URL() + restConfig.getROLES_URI() + "/all",
+                        HttpMethod.GET,
+                        new HttpEntity<>(restConfig.buildAuthHeaders(restConfig.getCREDENTIALS())),
+                        responseType);
         return roleResponse.getBody();
     }
 

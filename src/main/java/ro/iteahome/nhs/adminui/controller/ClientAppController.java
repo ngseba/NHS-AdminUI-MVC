@@ -23,6 +23,7 @@ import ro.iteahome.nhs.adminui.service.RoleService;
 
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -43,8 +44,11 @@ public class ClientAppController {
 // LINK "GET" REQUESTS: ------------------------------------------------------------------------------------------------
 
     @GetMapping("/add-form")
-    public String showAddForm(ClientAppDTO clientAppDTO) {
-        return "client-app/add-form";
+    public ModelAndView showAddForm(ClientAppDTO clientAppDTO) {
+        List<Role> rolesList = roleService.getRolesList();
+        clientAppDTO.setRolesList(rolesList);
+        return new ModelAndView("client-app/add-form")
+                .addObject(clientAppDTO);
     }
 
     @GetMapping("/get-form")
@@ -66,8 +70,8 @@ public class ClientAppController {
 
     @PostMapping
     public ModelAndView add(ClientAppDTO clientAppDTO) {
-        RoleDTO databaseRole = roleService.findByName(clientAppDTO.getRoleName());
-        ClientApp databaseClientApp = clientAppService.add(clientAppDTO,databaseRole.getId());
+        RoleDTO databaseRole = roleService.findByName(clientAppDTO.getSelectedRoleName());
+        ClientApp databaseClientApp = clientAppService.add(clientAppDTO,databaseRole.getName());
         return new ModelAndView("client-app/home-client-app").addObject(databaseClientApp);
     }
 
@@ -85,14 +89,18 @@ public class ClientAppController {
 
     @GetMapping("/update-form-by-name")
     public ModelAndView showUpdateFormByName(ClientApp clientApp) {
-        System.out.println(clientApp.getName());
         ClientApp databaseClientApp = clientAppService.findByName(clientApp.getName());
-        return new ModelAndView("client-app/update-form").addObject(databaseClientApp);
+        ClientAppDTO clientAppDTO = modelMapper.map(databaseClientApp,ClientAppDTO.class);
+        List<Role> rolesList = roleService.getRolesList();
+        clientAppDTO.setRolesList(rolesList);
+        return new ModelAndView("client-app/update-form").addObject(clientAppDTO);
     }
 
     @PostMapping("/updated-client-app")
-    public ModelAndView update(@Valid ClientApp clientApp) {
-        ClientApp databaseClientApp = clientAppService.update(clientApp);
+    public ModelAndView update(ClientAppDTO clientAppDTO) {
+        RoleDTO databaseRole = roleService.findByName(clientAppDTO.getSelectedRoleName());
+        ClientApp clientApp = modelMapper.map(clientAppDTO,ClientApp.class);
+        ClientApp databaseClientApp = clientAppService.update(clientApp,databaseRole.getName());
         return new ModelAndView("client-app/home-client-app").addObject(databaseClientApp);
     }
 

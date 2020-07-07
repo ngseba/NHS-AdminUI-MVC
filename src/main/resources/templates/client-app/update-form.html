@@ -16,9 +16,10 @@
 
 <body class="text-center">
 <div class = "form-nhs">
-<form class="form-nhs" method="POST" th:action="@{/client-apps/updated-client-app}" th:object="${clientApp}">
+<form class="form-nhs" method="POST" th:action="@{/client-apps/updated-client-app}" th:object="${clientAppDTO}">
 
     <input id="id" name="id" th:field="*{id}" type="hidden">
+    <input id="status" name="status" th:field="*{status}" type="hidden">
 
     <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
     <h1 class="h3 mb-3 font-weight-normal">Update Client App form</h1>
@@ -37,28 +38,20 @@
         <label for="name">Password</label>
     </div>
 
+    <div class="form-label-group">
+        <select id="selectedRoleName" name="selectedRoleName" th:field="*{selectedRoleName}"
+                class="form-control">
+            <option value="" selected disabled>Please select a Role</option>
+            <option th:each="role : ${clientAppDTO.rolesList}" th:value="${role}" th:text="${role}"></option>
+        </select>
+        <span th:errors="*{selectedRoleName}" th:if="${#fields.hasErrors('selectedRoleName')}"></span>
+    </div>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">Update Client App</button>
 
 </form>
     <br><br>
-    <form class="form-nhs" method="POST" th:action="@{/client-apps/updated-client-app/role}" th:object="${clientApp}">
 
-        <input name="id" th:field="*{id}" type="hidden">
-
-        <img class="mb-4" src="../../assets/brand/n.png" alt="" width="156" height="156">
-        <h1 class="h3 mb-3 font-weight-normal">Update Client App Role</h1>
-
-        <div class="form-label-group">
-            <input id="roleName" name="roleName" th:field="*{roleName}" type="text" class="form-control"
-                   placeholder="Role name" autofocus>
-            <span th:errors="*{roleName}" th:if="${#fields.hasErrors('roleName')}"></span>
-            <label for="roleName">Role name</label>
-        </div>
-
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Update Client App Role</button>
-
-    </form>
     <a href="/home-initial" class="btn btn-lg btn-secondary btn-block">Go back</a>
     <br><br>
 

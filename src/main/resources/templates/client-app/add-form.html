@@ -11,6 +11,7 @@
     <link href="../../assets/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../../assets/styles/nhsforms.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 </head>
 
@@ -37,10 +38,12 @@
     </div>
 
     <div class="form-label-group">
-        <input id="roleName" name="roleName" th:field="*{roleName}" type="text" class="form-control"
-               placeholder="Role name" autofocus>
-        <span th:errors="*{roleName}" th:if="${#fields.hasErrors('roleName')}"></span>
-        <label for="roleName">Role name</label>
+        <select id="selectedRoleName" name="selectedRoleName" th:field="*{selectedRoleName}"
+                class="form-control">
+            <option id="disabled" value=""  disabled selected>Please select a Role</option>
+            <option th:each="role : ${clientAppDTO.rolesList}" th:value="${role}" th:text="${role}"></option>
+        </select>
+        <span th:errors="*{selectedRoleName}" th:if="${#fields.hasErrors('selectedRoleName')}"></span>
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Add Client App</button>
@@ -51,4 +54,7 @@
 
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p></form>
 </body>
+<script>
+        $("#disabled").attr("selected",true);
+</script>
 </html>
