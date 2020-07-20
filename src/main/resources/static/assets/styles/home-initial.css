@@ -1,0 +1,63 @@
+body {
+
+    flex-direction: column;
+    padding-top: 0px;
+
+}
+
+.options a {
+    color: white;
+!important;
+    text-decoration: none;
+}
+
+.form-nhs {
+    padding: 0px;
+}
+
+
+.main-menu {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+    align-content: center;
+
+}
+
+.popover-body {
+    padding-right: 20px;
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.popover {
+    max-width: 400px;
+}
+
+.popover-header {
+    text-align: center;
+}
+
+li {
+    margin-top: 10px;
+    margin-left: 10px;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+.contents {
+    width: max-content;
+
+}
+

@@ -1,0 +1,24 @@
+# MVC CONFIGURATION - GENERAL:
+
+server:
+  port: 8082
+  use-forward-headers: true
+  servlet:
+    context-path: /
+    session:
+      timeout: 1d
+
+# NO PERSISTENCE NECESSARY. ADMINS ARE MANAGED THROUGH NHS BACKEND REST API.
+
+# NHS REST API CONNECTION PROPERTIES - GENERAL:
+
+nhs:
+  rest:
+    roles-uri: "/roles"
+    admins-uri: "/admins"
+    client-apps-uri: "/client-apps"
+    institutions-uri: "/medical-institutions"
+    doctors-uri: "/doctors"
+    nurses-uri: "/nurses"
+    patients-uri: "/patients"
+    credentials: "NHS_ADMIN_UI:P@ssW0rd!"
